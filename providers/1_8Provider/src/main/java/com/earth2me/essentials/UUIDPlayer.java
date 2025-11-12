@@ -1,36 +1,13 @@
 package com.earth2me.essentials;
 
-import org.bukkit.Achievement;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.EntityEffect;
-import org.bukkit.GameMode;
-import org.bukkit.Instrument;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Note;
-import org.bukkit.Server;
-import org.bukkit.Sound;
-import org.bukkit.Statistic;
-import org.bukkit.WeatherType;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Egg;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.*;
 import org.bukkit.map.MapView;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.permissions.Permission;
@@ -43,12 +20,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 import java.net.InetSocketAddress;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class UUIDPlayer implements Player {
     private final UUID uuid;
@@ -98,12 +70,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setCompassTarget(Location loc) {
+    public Location getCompassTarget() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Location getCompassTarget() {
+    public void setCompassTarget(Location loc) {
         throw new UnsupportedOperationException();
     }
 
@@ -188,12 +160,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setSleepingIgnored(boolean isSleeping) {
+    public boolean isSleepingIgnored() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean isSleepingIgnored() {
+    public void setSleepingIgnored(boolean isSleeping) {
         throw new UnsupportedOperationException();
     }
 
@@ -388,12 +360,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setPlayerWeather(WeatherType type) {
+    public WeatherType getPlayerWeather() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public WeatherType getPlayerWeather() {
+    public void setPlayerWeather(WeatherType type) {
         throw new UnsupportedOperationException();
     }
 
@@ -563,22 +535,22 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setFlySpeed(float value) throws IllegalArgumentException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setWalkSpeed(float value) throws IllegalArgumentException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public float getFlySpeed() {
         throw new UnsupportedOperationException();
     }
 
     @Override
+    public void setFlySpeed(float value) throws IllegalArgumentException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public float getWalkSpeed() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setWalkSpeed(float value) throws IllegalArgumentException {
         throw new UnsupportedOperationException();
     }
 
@@ -613,12 +585,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setHealthScale(double scale) throws IllegalArgumentException {
+    public double getHealthScale() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public double getHealthScale() {
+    public void setHealthScale(double scale) throws IllegalArgumentException {
         throw new UnsupportedOperationException();
     }
 
@@ -843,12 +815,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public int _INVALID_getLastDamage() {
+    public void setLastDamage(double damage) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setLastDamage(double damage) {
+    public int _INVALID_getLastDamage() {
         throw new UnsupportedOperationException();
     }
 
@@ -923,12 +895,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setCanPickupItems(boolean pickup) {
+    public boolean getCanPickupItems() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean getCanPickupItems() {
+    public void setCanPickupItems(boolean pickup) {
         throw new UnsupportedOperationException();
     }
 
@@ -973,12 +945,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public int _INVALID_getHealth() {
+    public void setHealth(double health) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setHealth(double health) {
+    public int _INVALID_getHealth() {
         throw new UnsupportedOperationException();
     }
 
@@ -993,12 +965,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public int _INVALID_getMaxHealth() {
+    public void setMaxHealth(double health) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setMaxHealth(double health) {
+    public int _INVALID_getMaxHealth() {
         throw new UnsupportedOperationException();
     }
 
@@ -1023,12 +995,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setVelocity(Vector velocity) {
+    public Vector getVelocity() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Vector getVelocity() {
+    public void setVelocity(Vector velocity) {
         throw new UnsupportedOperationException();
     }
 
@@ -1078,12 +1050,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public int getMaxFireTicks() {
+    public void setFireTicks(int ticks) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setFireTicks(int ticks) {
+    public int getMaxFireTicks() {
         throw new UnsupportedOperationException();
     }
 
@@ -1143,12 +1115,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setLastDamageCause(EntityDamageEvent event) {
+    public EntityDamageEvent getLastDamageCause() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public EntityDamageEvent getLastDamageCause() {
+    public void setLastDamageCause(EntityDamageEvent event) {
         throw new UnsupportedOperationException();
     }
 
@@ -1188,12 +1160,12 @@ public class UUIDPlayer implements Player {
     }
 
     @Override
-    public void setCustomNameVisible(boolean flag) {
+    public boolean isCustomNameVisible() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean isCustomNameVisible() {
+    public void setCustomNameVisible(boolean flag) {
         throw new UnsupportedOperationException();
     }
 

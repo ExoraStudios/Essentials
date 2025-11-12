@@ -3,11 +3,7 @@ package com.earth2me.essentials;
 import net.ess3.api.IEssentials;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class EssentialsTimer implements Runnable {
@@ -95,7 +91,7 @@ public class EssentialsTimer implements Runnable {
                 continue;
             }
             user.checkMuteTimeout(currentTime);
-            user.checkJailTimeout(currentTime);
+            //   user.checkJailTimeout(currentTime);
             user.resetInvulnerabilityAfterTeleport();
         }
     }

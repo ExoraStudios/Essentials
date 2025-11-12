@@ -3,11 +3,7 @@ package com.earth2me.essentials.commands;
 import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
-import com.earth2me.essentials.utils.AdventureUtil;
-import com.earth2me.essentials.utils.CommonPlaceholders;
-import com.earth2me.essentials.utils.DateUtil;
-import com.earth2me.essentials.utils.EnumUtil;
-import com.earth2me.essentials.utils.NumberUtil;
+import com.earth2me.essentials.utils.*;
 import org.bukkit.Server;
 import org.bukkit.Statistic;
 
@@ -70,7 +66,7 @@ public class Commandwhois extends EssentialsCommand {
             sender.sendTl("whoisMuted", AdventureUtil.parsed(user.isMuted() ? muteTimeout > 0 ? DateUtil.formatDateDiff(muteTimeout) : sender.tl("true") : sender.tl("false")));
         } else {
             sender.sendTl("whoisMutedReason", AdventureUtil.parsed(user.isMuted() ? muteTimeout > 0 ? DateUtil.formatDateDiff(muteTimeout) : sender.tl("true") : sender.tl("false")),
-                user.getMuteReason());
+                    user.getMuteReason());
         }
     }
 

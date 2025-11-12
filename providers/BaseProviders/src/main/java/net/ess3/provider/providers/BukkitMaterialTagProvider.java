@@ -14,6 +14,16 @@ import java.util.Map;
 public class BukkitMaterialTagProvider implements MaterialTagProvider {
     private final Map<String, Tag<Material>> stringToTagMap = new HashMap<>();
 
+    @ProviderTest
+    public static boolean test() {
+        try {
+            Class.forName("org.bukkit.Tag");
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+
     @Override
     public boolean tagExists(String tagName) {
         if (tagName == null) {
@@ -48,15 +58,5 @@ public class BukkitMaterialTagProvider implements MaterialTagProvider {
             }
         }
         return stringToTagMap.get(tagName);
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            Class.forName("org.bukkit.Tag");
-            return true;
-        } catch (ClassNotFoundException ignored) {
-            return false;
-        }
     }
 }

@@ -24,13 +24,12 @@ import java.util.logging.Level;
  */
 public class Economy {
     public static final MathContext MATH_CONTEXT = MathContext.DECIMAL128;
-    private static IEssentials ess;
-
     private static final String WARN_CALL_BEFORE_LOAD = "Essentials API is called before Essentials is loaded.";
     private static final String WARN_EXISTING_NPC_CREATE = "Account creation was requested for NPC account {0}, but account already exists (UUID: {1}). Not creating an account.";
     private static final String WARN_PLAYER_UUID_NO_NAME = "Found player {0} by UUID {1} but not by their actual name. They may have changed their username.";
     private static final String WARN_NPC_RECREATE_1 = "Account creation was requested for NPC user {0}, but an account file with UUID {1} already exists.";
     private static final String WARN_NPC_RECREATE_2 = "Essentials will create a new account as requested by the other plugin, but this is almost certainly a bug and should be reported.";
+    private static IEssentials ess;
 
     protected Economy() {
     }

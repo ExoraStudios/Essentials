@@ -25,8 +25,13 @@ public class UserMailEvent extends Event implements Cancellable {
         this.message = message;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the recipient of this mail.
+     *
      * @return the recipient.
      */
     public IUser getRecipient() {
@@ -35,15 +40,11 @@ public class UserMailEvent extends Event implements Cancellable {
 
     /**
      * Gets the underlying {@link MailMessage} for this mail.
+     *
      * @return the message.
      */
     public MailMessage getMessage() {
         return message;
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        this.canceled = cancel;
     }
 
     @Override
@@ -52,11 +53,12 @@ public class UserMailEvent extends Event implements Cancellable {
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return handlers;
+    public void setCancelled(boolean cancel) {
+        this.canceled = cancel;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

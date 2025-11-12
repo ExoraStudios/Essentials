@@ -11,12 +11,6 @@ import org.bukkit.block.Block;
 
 @ProviderData(description = "Paper Biome Key Provider")
 public class PaperBiomeKeyProvider implements BiomeKeyProvider {
-    @Override
-    public NamespacedKey getBiomeKey(final Block block) {
-        //noinspection deprecation
-        return Bukkit.getUnsafe().getBiomeKey(block.getWorld(), block.getX(), block.getY(), block.getZ());
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -26,5 +20,11 @@ public class PaperBiomeKeyProvider implements BiomeKeyProvider {
         } catch (final Throwable ignored) {
             return false;
         }
+    }
+
+    @Override
+    public NamespacedKey getBiomeKey(final Block block) {
+        //noinspection deprecation
+        return Bukkit.getUnsafe().getBiomeKey(block.getWorld(), block.getX(), block.getY(), block.getZ());
     }
 }

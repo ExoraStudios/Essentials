@@ -7,20 +7,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import net.ess3.api.TranslatableException;
 import org.bukkit.Server;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.DragonFireball;
-import org.bukkit.entity.Egg;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.LargeFireball;
-import org.bukkit.entity.LingeringPotion;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.SmallFireball;
-import org.bukkit.entity.Snowball;
-import org.bukkit.entity.SplashPotion;
-import org.bukkit.entity.ThrownExpBottle;
-import org.bukkit.entity.Trident;
-import org.bukkit.entity.WindCharge;
-import org.bukkit.entity.WitherSkull;
+import org.bukkit.entity.*;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
@@ -37,19 +24,19 @@ public class Commandfireball extends EssentialsCommand {
 
     static {
         final ImmutableMap.Builder<String, Class<? extends Projectile>> builder = ImmutableMap.<String, Class<? extends Projectile>>builder()
-            .put("fireball", Fireball.class)
-            .put("small", SmallFireball.class)
-            .put("large", LargeFireball.class)
-            .put("arrow", Arrow.class)
-            .put("skull", WitherSkull.class)
-            .put("egg", Egg.class)
-            .put("snowball", Snowball.class)
-            .put("expbottle", ThrownExpBottle.class);
+                .put("fireball", Fireball.class)
+                .put("small", SmallFireball.class)
+                .put("large", LargeFireball.class)
+                .put("arrow", Arrow.class)
+                .put("skull", WitherSkull.class)
+                .put("egg", Egg.class)
+                .put("snowball", Snowball.class)
+                .put("expbottle", ThrownExpBottle.class);
 
         if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_9_R01)) {
             builder.put("dragon", DragonFireball.class)
-                .put("splashpotion", SplashPotion.class)
-                .put("lingeringpotion", LingeringPotion.class);
+                    .put("splashpotion", SplashPotion.class)
+                    .put("lingeringpotion", LingeringPotion.class);
         }
 
         if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_13_0_R01)) {
@@ -100,8 +87,8 @@ public class Commandfireball extends EssentialsCommand {
     protected List<String> getTabCompleteOptions(final Server server, final User user, final String commandLabel, final String[] args) {
         if (args.length == 1) {
             return types.keySet().stream()
-                .filter(type -> user.isAuthorized("essentials.fireball." + type))
-                .collect(Collectors.toList());
+                    .filter(type -> user.isAuthorized("essentials.fireball." + type))
+                    .collect(Collectors.toList());
         } else if (args.length == 2) {
             return Lists.newArrayList("1", "2", "3", "4", "5");
         } else {

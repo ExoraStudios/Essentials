@@ -27,6 +27,7 @@ public class ProviderFactory {
 
     /**
      * Gets the provider which has been selected for the given type.
+     *
      * @param providerClass The provider type.
      * @return the provider or null if no provider could be selected for that type.
      */
@@ -128,7 +129,8 @@ public class ProviderFactory {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             try {
                 return provider.getConstructor().newInstance();
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ex) {
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException ex) {
                 e.printStackTrace();
                 throw new RuntimeException(ex);
             }

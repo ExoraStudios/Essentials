@@ -31,7 +31,7 @@ public class Commandgc extends EssentialsCommand {
         }
 
         sender.sendTl("uptime", DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime()));
-        sender.sendTl("tps", "" + color + NumberUtil.formatDouble(tps));
+        sender.sendTl("tps", color + NumberUtil.formatDouble(tps));
         sender.sendTl("gcmax", Runtime.getRuntime().maxMemory() / 1024 / 1024);
         sender.sendTl("gctotal", Runtime.getRuntime().totalMemory() / 1024 / 1024);
         sender.sendTl("gcfree", Runtime.getRuntime().freeMemory() / 1024 / 1024);

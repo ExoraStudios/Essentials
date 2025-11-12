@@ -9,7 +9,7 @@ dependencies {
 
 shadowJar {
     dependencies {
-        include (dependency('org.igniterealtime.smack:smack'))
+        include(dependency('org.igniterealtime.smack:smack'))
     }
     relocate 'org.bstats', 'com.earth2me.essentials.libs.bstats'
 }

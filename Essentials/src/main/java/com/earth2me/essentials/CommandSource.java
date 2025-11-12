@@ -1,6 +1,7 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.utils.AdventureUtil;
+import com.earth2me.essentials.utils.TaskUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
@@ -29,16 +30,18 @@ public class CommandSource {
     }
 
     public void sendTl(final String tlKey, final Object... args) {
-        if (isPlayer()) {
-            //noinspection ConstantConditions
-            getUser().sendTl(tlKey, args);
-            return;
-        }
+        TaskUtil.EXECUTOR.execute(() -> {
+            if (isPlayer()) {
+                //noinspection ConstantConditions
+                getUser().sendTl(tlKey, args);
+                return;
+            }
 
-        final String translation = tlLiteral(tlKey, args);
-        if (!translation.isEmpty()) {
-            sendComponent(AdventureUtil.miniMessage().deserialize(translation));
-        }
+            final String translation = tlLiteral(tlKey, args);
+            if (!translation.isEmpty()) {
+                sendComponent(AdventureUtil.miniMessage().deserialize(translation));
+            }
+        });
     }
 
     public String tl(final String tlKey, final Object... args) {
@@ -59,8 +62,10 @@ public class CommandSource {
     }
 
     public void sendComponent(final Component component) {
-        final BukkitAudiences audiences = ess.getBukkitAudience();
-        audiences.sender(sender).sendMessage(component);
+        TaskUtil.EXECUTOR.execute(() -> {
+            final BukkitAudiences audiences = ess.getBukkitAudience();
+            audiences.sender(sender).sendMessage(component);
+        });
     }
 
     public final net.ess3.api.IUser getUser() {

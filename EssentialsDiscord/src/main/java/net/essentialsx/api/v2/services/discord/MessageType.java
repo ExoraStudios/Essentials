@@ -11,6 +11,7 @@ public final class MessageType {
      * Creates a {@link MessageType} which will send channels to the specified channel key.
      * <p>
      * The message type key may only contain: lowercase letters, numbers, and dashes.
+     *
      * @param key The channel key defined in the {@code message-types} section of the config.
      */
     public MessageType(final String key) {
@@ -30,6 +31,7 @@ public final class MessageType {
 
     /**
      * Gets the key used in {@code message-types} section of the config.
+     *
      * @return The config key.
      */
     public String getKey() {
@@ -38,6 +40,7 @@ public final class MessageType {
 
     /**
      * Checks if this message type should be beholden to player-specific config settings.
+     *
      * @return true if message type should be beholden to player-specific config settings.
      */
     public boolean isPlayer() {
@@ -73,6 +76,7 @@ public final class MessageType {
 
         /**
          * Gets an array of all the default {@link MessageType MessageTypes}.
+         *
          * @return An array of all the default {@link MessageType MessageTypes}.
          */
         public static MessageType[] values() {

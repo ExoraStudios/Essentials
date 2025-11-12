@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.JDA;
 public interface Unsafe {
     /**
      * Gets the JDA instance associated with this EssentialsX Discord instance, if available.
+     *
      * @return the {@link JDA} instance or null if not ready.
      */
     JDA getJDAInstance();

@@ -3,16 +3,7 @@ package com.earth2me.essentials;
 import com.earth2me.essentials.utils.AdventureUtil;
 import net.ess3.api.IEssentials;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
 import java.security.DigestOutputStream;
@@ -35,7 +26,7 @@ public class ManagedFile {
         if (file.exists()) {
             try {
                 if (checkForVersion(file, ess.getDescription().getVersion()) && !file.delete()) {
-                    throw new IOException("Could not delete file " + file.toString());
+                    throw new IOException("Could not delete file " + file);
                 }
             } catch (final IOException ex) {
                 Essentials.getWrappedLogger().log(Level.SEVERE, ex.getMessage(), ex);
@@ -113,7 +104,7 @@ public class ManagedFile {
                                 if (correct.equals(test)) {
                                     return true;
                                 } else {
-                                    Essentials.getWrappedLogger().warning("File " + file.toString() + " has been modified by user and file version differs, please update the file manually.");
+                                    Essentials.getWrappedLogger().warning("File " + file + " has been modified by user and file version differs, please update the file manually.");
                                 }
                             }
                         }

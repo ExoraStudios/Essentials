@@ -9,16 +9,7 @@ import net.ess3.api.TranslatableException;
 import org.bukkit.Server;
 import org.bukkit.World;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.StringJoiner;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Commandtime extends EssentialsCommand {
     private final List<String> subCommands = Arrays.asList("add", "set");
@@ -138,7 +129,7 @@ public class Commandtime extends EssentialsCommand {
 
     private boolean canUpdateAll(final CommandSource sender) {
         return !ess.getSettings().isWorldTimePermissions() // First check if per world permissions are enabled, if not, return true.
-            || sender.isAuthorized("essentials.time.world.all");
+                || sender.isAuthorized("essentials.time.world.all");
     }
 
     private boolean canUpdateWorld(final CommandSource sender, final World world) {

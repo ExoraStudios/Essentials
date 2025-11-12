@@ -11,11 +11,6 @@ import java.util.Map;
 
 @ProviderData(description = "Paper Known Commands Provider", weight = 1)
 public class PaperKnownCommandsProvider implements KnownCommandsProvider {
-    @Override
-    public Map<String, Command> getKnownCommands() {
-        return Bukkit.getCommandMap().getKnownCommands();
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -25,5 +20,10 @@ public class PaperKnownCommandsProvider implements KnownCommandsProvider {
         } catch (NoSuchMethodException e) {
             return false;
         }
+    }
+
+    @Override
+    public Map<String, Command> getKnownCommands() {
+        return Bukkit.getCommandMap().getKnownCommands();
     }
 }

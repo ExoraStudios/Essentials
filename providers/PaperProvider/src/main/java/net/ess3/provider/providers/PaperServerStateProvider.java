@@ -7,11 +7,6 @@ import org.bukkit.Bukkit;
 
 @ProviderData(description = "Paper Server State Provider", weight = 1)
 public class PaperServerStateProvider implements ServerStateProvider {
-    @Override
-    public boolean isStopping() {
-        return Bukkit.isStopping();
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -20,5 +15,10 @@ public class PaperServerStateProvider implements ServerStateProvider {
         } catch (final NoSuchMethodException ignored) {
             return false;
         }
+    }
+
+    @Override
+    public boolean isStopping() {
+        return Bukkit.isStopping();
     }
 }

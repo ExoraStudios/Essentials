@@ -8,6 +8,7 @@ import net.ess3.api.IUser;
 public interface MailService {
     /**
      * Sends a message from the specified {@link MailSender sender} to the specified {@link IUser recipient}.
+     *
      * @param recipient The {@link IUser} which to send the message to.
      * @param sender    The {@link MailSender} which sent the message.
      * @param message   The message content.
@@ -16,6 +17,7 @@ public interface MailService {
 
     /**
      * Sends a message from the specified {@link MailSender sender} to the specified {@link IUser recipient}.
+     *
      * @param recipient The {@link IUser} which to send the message to.
      * @param sender    The {@link MailSender} which sent the message.
      * @param message   The message content.
@@ -25,6 +27,7 @@ public interface MailService {
 
     /**
      * Sends a legacy message to the user without any advanced features.
+     *
      * @param recipient The {@link IUser} which to send the message to.
      * @param message   The message content.
      * @see #sendMail(IUser, MailSender, String)
@@ -36,6 +39,7 @@ public interface MailService {
 
     /**
      * Generates the message sent to the recipient of the given {@link MailMessage}.
+     *
      * @param message The {@link MailMessage} to generate the message for.
      * @return The formatted message to be sent to the recipient.
      */
@@ -43,12 +47,14 @@ public interface MailService {
 
     /**
      * Helper method to get the translation key for a given {@link MailMessage}.
+     *
      * @return the translation key.
      */
     String getMailTlKey(MailMessage message);
 
     /**
      * Helper method to get the translation arguments for a given {@link MailMessage}.
+     *
      * @return the translation arguments.
      */
     Object[] getMailTlArgs(MailMessage message);

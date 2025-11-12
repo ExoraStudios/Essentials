@@ -6,24 +6,10 @@ import com.earth2me.essentials.utils.FormatUtil;
 import com.earth2me.essentials.utils.StringUtil;
 import net.ess3.api.IEssentials;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
+import java.io.*;
 import java.lang.ref.SoftReference;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class TextInput implements IText {
     private static final HashMap<String, SoftReference<TextInput>> cache = new HashMap<>();

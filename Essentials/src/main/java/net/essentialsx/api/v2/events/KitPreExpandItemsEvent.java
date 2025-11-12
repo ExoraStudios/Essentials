@@ -12,6 +12,7 @@ import java.util.List;
  * <p>
  * This event is not cancellable and is called right before items are about to be received by the {@link #getUser() user}.
  * If you want to prevent kits from being claimed to begin with, use the {@link net.ess3.api.events.KitClaimEvent}
+ *
  * @see net.ess3.api.events.KitClaimEvent
  */
 public class KitPreExpandItemsEvent extends Event {
@@ -27,8 +28,13 @@ public class KitPreExpandItemsEvent extends Event {
         this.itemStacks = itemStacks;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the {@link IUser user} who is receiving the kit.
+     *
      * @return the user.
      */
     public IUser getUser() {
@@ -37,6 +43,7 @@ public class KitPreExpandItemsEvent extends Event {
 
     /**
      * Gets the name of the kit the {@link IUser user} is receiving.
+     *
      * @return the name of the kit.
      */
     public String getKitName() {
@@ -45,6 +52,7 @@ public class KitPreExpandItemsEvent extends Event {
 
     /**
      * Returns a mutable list with items to be received by the {@link IUser user}.
+     *
      * @return the list of items.
      */
     public List<ItemStack> getItemStacks() {
@@ -53,10 +61,6 @@ public class KitPreExpandItemsEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

@@ -8,16 +8,6 @@ import org.bukkit.inventory.ItemStack;
 @ProviderData(description = "Paper Serialization Provider")
 public class PaperSerializationProvider implements SerializationProvider {
 
-    @Override
-    public byte[] serializeItem(ItemStack stack) {
-        return stack.serializeAsBytes();
-    }
-
-    @Override
-    public ItemStack deserializeItem(byte[] bytes) {
-        return ItemStack.deserializeBytes(bytes);
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -26,5 +16,15 @@ public class PaperSerializationProvider implements SerializationProvider {
         } catch (final NoSuchMethodException ignored) {
             return false;
         }
+    }
+
+    @Override
+    public byte[] serializeItem(ItemStack stack) {
+        return stack.serializeAsBytes();
+    }
+
+    @Override
+    public ItemStack deserializeItem(byte[] bytes) {
+        return ItemStack.deserializeBytes(bytes);
     }
 }

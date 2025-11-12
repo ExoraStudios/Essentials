@@ -2,11 +2,7 @@ package net.essentialsx.discordlink.commands.discord;
 
 import com.google.common.collect.ImmutableList;
 import net.ess3.api.IUser;
-import net.essentialsx.api.v2.services.discord.InteractionCommand;
-import net.essentialsx.api.v2.services.discord.InteractionCommandArgument;
-import net.essentialsx.api.v2.services.discord.InteractionCommandArgumentType;
-import net.essentialsx.api.v2.services.discord.InteractionEvent;
-import net.essentialsx.api.v2.services.discord.InteractionMember;
+import net.essentialsx.api.v2.services.discord.*;
 import net.essentialsx.discordlink.AccountLinkManager;
 
 import java.util.List;

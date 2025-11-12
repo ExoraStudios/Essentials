@@ -67,7 +67,7 @@ public class AsyncTeleport implements IAsyncTeleport {
                 teleportOwner.setLastTeleportTimestamp(time.getTimeInMillis());
                 return false;
             } else if (lastTime > earliestLong
-                && cooldownApplies()) {
+                    && cooldownApplies()) {
                 time.setTimeInMillis(lastTime);
                 time.add(Calendar.SECOND, (int) cooldown);
                 time.add(Calendar.MILLISECOND, (int) ((cooldown * 1000.0) % 1000.0));
@@ -91,11 +91,11 @@ public class AsyncTeleport implements IAsyncTeleport {
                 break;
             case BACK:
                 applies = !(teleportOwner.isAuthorized(globalBypassPerm) &&
-                    teleportOwner.isAuthorized("essentials.teleport.cooldown.bypass.back"));
+                        teleportOwner.isAuthorized("essentials.teleport.cooldown.bypass.back"));
                 break;
             case TPA:
                 applies = !(teleportOwner.isAuthorized(globalBypassPerm) &&
-                    teleportOwner.isAuthorized("essentials.teleport.cooldown.bypass.tpa"));
+                        teleportOwner.isAuthorized("essentials.teleport.cooldown.bypass.tpa"));
                 break;
         }
         return applies;
@@ -173,41 +173,41 @@ public class AsyncTeleport implements IAsyncTeleport {
             targetLoc.setZ(LocationUtil.getZInsideWorldBorder(targetLoc.getWorld(), targetLoc.getBlockZ()));
         }
         PaperLib.getChunkAtAsync(targetLoc.getWorld(), targetLoc.getBlockX() >> 4, targetLoc.getBlockZ() >> 4, true, true).thenAccept(chunk ->
-            ess.ensureRegion(targetLoc, () -> {
-                if (LocationUtil.isBlockUnsafeForUser(ess, teleportee, targetLoc.getWorld(), targetLoc.getBlockX(), targetLoc.getBlockY(), targetLoc.getBlockZ())) {
-                    if (ess.getSettings().isTeleportSafetyEnabled()) {
+                ess.ensureRegion(targetLoc, () -> {
+                    if (LocationUtil.isBlockUnsafeForUser(ess, teleportee, targetLoc.getWorld(), targetLoc.getBlockX(), targetLoc.getBlockY(), targetLoc.getBlockZ())) {
+                        if (ess.getSettings().isTeleportSafetyEnabled()) {
+                            if (ess.getSettings().isForceDisableTeleportSafety()) {
+                                PaperLib.teleportAsync(teleportee.getBase(), targetLoc, cause);
+                            } else {
+                                try {
+                                    //There's a chance the safer location is outside the loaded chunk so still teleport async here.
+                                    PaperLib.teleportAsync(teleportee.getBase(), LocationUtil.getSafeDestination(ess, teleportee, targetLoc), cause);
+                                } catch (final Exception e) {
+                                    future.completeExceptionally(e);
+                                    return;
+                                }
+                            }
+                        } else {
+                            future.completeExceptionally(new TranslatableException("unsafeTeleportDestination", targetLoc.getWorld().getName(), targetLoc.getBlockX(), targetLoc.getBlockY(), targetLoc.getBlockZ()));
+                            return;
+                        }
+                    } else {
                         if (ess.getSettings().isForceDisableTeleportSafety()) {
                             PaperLib.teleportAsync(teleportee.getBase(), targetLoc, cause);
                         } else {
-                            try {
-                                //There's a chance the safer location is outside the loaded chunk so still teleport async here.
-                                PaperLib.teleportAsync(teleportee.getBase(), LocationUtil.getSafeDestination(ess, teleportee, targetLoc), cause);
-                            } catch (final Exception e) {
-                                future.completeExceptionally(e);
-                                return;
+                            Location dest = targetLoc;
+                            if (ess.getSettings().isTeleportToCenterLocation()) {
+                                dest = LocationUtil.getRoundedDestination(targetLoc);
                             }
+                            // There's a *small* chance the rounded destination produces a location outside the loaded chunk so still teleport async here.
+                            PaperLib.teleportAsync(teleportee.getBase(), dest, cause);
                         }
-                    } else {
-                        future.completeExceptionally(new TranslatableException("unsafeTeleportDestination", targetLoc.getWorld().getName(), targetLoc.getBlockX(), targetLoc.getBlockY(), targetLoc.getBlockZ()));
-                        return;
                     }
-                } else {
-                    if (ess.getSettings().isForceDisableTeleportSafety()) {
-                        PaperLib.teleportAsync(teleportee.getBase(), targetLoc, cause);
-                    } else {
-                        Location dest = targetLoc;
-                        if (ess.getSettings().isTeleportToCenterLocation()) {
-                            dest = LocationUtil.getRoundedDestination(targetLoc);
-                        }
-                        // There's a *small* chance the rounded destination produces a location outside the loaded chunk so still teleport async here.
-                        PaperLib.teleportAsync(teleportee.getBase(), dest, cause);
-                    }
-                }
-                future.complete(true);
-            })).exceptionally(th -> {
-                future.completeExceptionally(th);
-                return null;
-            });
+                    future.complete(true);
+                })).exceptionally(th -> {
+            future.completeExceptionally(th);
+            return null;
+        });
     }
 
     @Override
@@ -318,9 +318,9 @@ public class AsyncTeleport implements IAsyncTeleport {
             return;
         }
         if (delay <= 0 || teleporter == null
-            || teleporter.isAuthorized("essentials.teleport.timer.bypass")
-            || teleportOwner.isAuthorized("essentials.teleport.timer.bypass")
-            || teleportee.isAuthorized("essentials.teleport.timer.bypass")) {
+                || teleporter.isAuthorized("essentials.teleport.timer.bypass")
+                || teleportOwner.isAuthorized("essentials.teleport.timer.bypass")
+                || teleportee.isAuthorized("essentials.teleport.timer.bypass")) {
             if (cooldown(false, future)) {
                 return;
             }

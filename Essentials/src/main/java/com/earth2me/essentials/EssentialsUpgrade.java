@@ -20,30 +20,12 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -58,7 +40,7 @@ public class EssentialsUpgrade {
     public static final FileFilter YML_FILTER = pathname -> pathname.isFile() && pathname.getName().endsWith(".yml");
     private static final String PATTERN_CONFIG_UUID_REGEX = "(?mi)^uuid:\\s*([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\\s*$";
     private static final Pattern PATTERN_CONFIG_UUID = Pattern.compile(PATTERN_CONFIG_UUID_REGEX);
-    private static final String PATTERN_CONFIG_NAME_REGEX = "(?mi)^lastAccountName:\\s*[\"\']?(\\w+)[\"\']?\\s*$";
+    private static final String PATTERN_CONFIG_NAME_REGEX = "(?mi)^lastAccountName:\\s*[\"']?(\\w+)[\"']?\\s*$";
     private static final Pattern PATTERN_CONFIG_NAME = Pattern.compile(PATTERN_CONFIG_NAME_REGEX);
     private final transient IEssentials ess;
     private final transient EssentialsConfiguration doneFile;
@@ -219,7 +201,8 @@ public class EssentialsUpgrade {
                     }
 
                     config.removeProperty("mail");
-                    config.setExplicitList("mail", messages, new TypeToken<List<MailMessage>>() {}.getType());
+                    config.setExplicitList("mail", messages, new TypeToken<List<MailMessage>>() {
+                    }.getType());
                     config.blockingSave();
                 }
             } catch (RuntimeException ex) {

@@ -4,11 +4,7 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.economy.EconomyLayer;
 import com.earth2me.essentials.economy.EconomyLayers;
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.AdvancedBarChart;
-import org.bstats.charts.CustomChart;
-import org.bstats.charts.DrilldownPie;
-import org.bstats.charts.MultiLineChart;
-import org.bstats.charts.SimplePie;
+import org.bstats.charts.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

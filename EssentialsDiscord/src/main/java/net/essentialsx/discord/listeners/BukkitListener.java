@@ -4,10 +4,10 @@ import com.earth2me.essentials.Console;
 import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.utils.FormatUtil;
 import com.earth2me.essentials.utils.VersionUtil;
-import net.ess3.api.events.PrivateMessageSentEvent;
 import net.ess3.api.IUser;
 import net.ess3.api.events.AfkStatusChangeEvent;
 import net.ess3.api.events.MuteStatusChangeEvent;
+import net.ess3.api.events.PrivateMessageSentEvent;
 import net.ess3.api.events.VanishStatusChangeEvent;
 import net.ess3.provider.AbstractAchievementEvent;
 import net.essentialsx.api.v2.events.AsyncUserDataLoadEvent;
@@ -62,7 +62,7 @@ public class BukkitListener implements Listener {
                         MessageUtil.sanitizeDiscordMarkdown(event.getRecipient().getName()),
                         MessageUtil.sanitizeDiscordMarkdown(event.getRecipient().getDisplayName()),
                         MessageUtil.sanitizeDiscordMarkdown(event.getMessage())),
-                        event.getSender() instanceof IUser ? ((IUser) event.getSender()).getBase() : null);
+                event.getSender() instanceof IUser ? ((IUser) event.getSender()).getBase() : null);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -159,7 +159,7 @@ public class BukkitListener implements Listener {
                         MessageUtil.sanitizeDiscordMarkdown(message),
                         onlineCount,
                         jda.getPlugin().getEss().getUsers().getUserCount()),
-                        player);
+                player);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -278,12 +278,12 @@ public class BukkitListener implements Listener {
             }
 
             name = MessageUtil.formatMessage(jda.getSettings().getMcToDiscordNameFormat(player),
-                player.getName(),
-                player.getDisplayName(),
-                jda.getPlugin().getEss().getSettings().getWorldAlias(player.getWorld().getName()),
-                FormatUtil.stripEssentialsFormat(jda.getPlugin().getEss().getPermissionsHandler().getPrefix(player)),
-                FormatUtil.stripEssentialsFormat(jda.getPlugin().getEss().getPermissionsHandler().getSuffix(player)),
-                jda.getGuild().getMember(jda.getJda().getSelfUser()).getEffectiveName());
+                    player.getName(),
+                    player.getDisplayName(),
+                    jda.getPlugin().getEss().getSettings().getWorldAlias(player.getWorld().getName()),
+                    FormatUtil.stripEssentialsFormat(jda.getPlugin().getEss().getPermissionsHandler().getPrefix(player)),
+                    FormatUtil.stripEssentialsFormat(jda.getPlugin().getEss().getPermissionsHandler().getSuffix(player)),
+                    jda.getGuild().getMember(jda.getJda().getSelfUser()).getEffectiveName());
 
             uuid = player.getUniqueId();
         }

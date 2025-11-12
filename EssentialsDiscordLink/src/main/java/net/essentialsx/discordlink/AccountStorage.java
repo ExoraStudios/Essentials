@@ -6,12 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -39,7 +34,8 @@ public class AccountStorage {
             throw new IOException("Unable to create account file!");
         }
         try (final Reader reader = new FileReader(accountFile)) {
-            final Map<String, String> map = gson.fromJson(reader, new TypeToken<Map<String, String>>() {}.getType());
+            final Map<String, String> map = gson.fromJson(reader, new TypeToken<Map<String, String>>() {
+            }.getType());
             uuidToDiscordIdMap = map == null ? Maps.synchronizedBiMap(HashBiMap.create()) : Maps.synchronizedBiMap(HashBiMap.create(map));
         }
 

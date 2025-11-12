@@ -8,11 +8,7 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.earth2me.essentials.I18n.capitalCase;
 

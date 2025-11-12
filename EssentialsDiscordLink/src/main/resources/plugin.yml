@@ -4,21 +4,21 @@ main: net.essentialsx.discordlink.EssentialsDiscordLink
 version: ${full.version}
 website: https://essentialsx.net/
 description: EssentialsX Discord addon which allows you link your Minecraft and Discord accounts together.
-authors: [JRoy]
-depend: [EssentialsDiscord]
+authors: [ JRoy ]
+depend: [ EssentialsDiscord ]
 api-version: 1.13
 folia-supported: true
 commands:
   link:
     description: Generates a code to link your Minecraft account to Discord.
     usage: /<command>
-    aliases: [elink, discordlink, ediscordlink]
+    aliases: [ elink, discordlink, ediscordlink ]
   unlink:
     description: Unlinks your Minecraft account from any associated Discord account.
     usage: /<command>
-    aliases: [eunlink, discordunlink, ediscordunlink]
+    aliases: [ eunlink, discordunlink, ediscordunlink ]
 permissions:
-    essentials.link:
-      description: Allows access to the /link command
-    essentials.unlink:
-      description: Allows access to the /unlink command
+  essentials.link:
+    description: Allows access to the /link command
+  essentials.unlink:
+    description: Allows access to the /unlink command

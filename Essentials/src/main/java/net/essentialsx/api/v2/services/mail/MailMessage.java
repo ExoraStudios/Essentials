@@ -26,6 +26,7 @@ public class MailMessage {
 
     /**
      * Checks if this message has been read by its recipient yet.
+     *
      * @return true if this message has been read.
      */
     public boolean isRead() {
@@ -34,11 +35,12 @@ public class MailMessage {
 
     /**
      * Checks if this message was created via legacy api or converted from legacy format.
-     *
+     * <p>
      * A legacy messages only contains data for the read state and message.
+     *
+     * @return true if this message is a legacy message.
      * @see #isRead()
      * @see #getMessage()
-     * @return true if this message is a legacy message.
      */
     public boolean isLegacy() {
         return legacy;
@@ -46,6 +48,7 @@ public class MailMessage {
 
     /**
      * Gets the sender's username at the time of sending the message.
+     *
      * @return The sender's username.
      */
     public String getSenderUsername() {
@@ -54,6 +57,7 @@ public class MailMessage {
 
     /**
      * Gets the sender's {@link UUID} or null if the sender does not have a UUID.
+     *
      * @return The sender's {@link UUID} or null.
      */
     public UUID getSenderUUID() {
@@ -62,6 +66,7 @@ public class MailMessage {
 
     /**
      * Gets the millisecond epoch time when the message was sent.
+     *
      * @return The epoch time when message was sent.
      */
     public long getTimeSent() {
@@ -70,6 +75,7 @@ public class MailMessage {
 
     /**
      * Gets the millisecond epoch at which this message will expire and no longer been shown to the user.
+     *
      * @return The epoch time when the message will expire.
      */
     public long getTimeExpire() {
@@ -78,8 +84,9 @@ public class MailMessage {
 
     /**
      * Gets the message content for normal mail or the entire mail format for legacy mail.
-     * @see #isLegacy()
+     *
      * @return The mail content or format.
+     * @see #isLegacy()
      */
     public String getMessage() {
         return message;
@@ -87,6 +94,7 @@ public class MailMessage {
 
     /**
      * Helper method to check if this mail has expired and should not been shown to the recipient.
+     *
      * @return true if this mail has expired.
      */
     public boolean isExpired() {

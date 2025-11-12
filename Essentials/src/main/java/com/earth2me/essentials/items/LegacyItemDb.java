@@ -15,13 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -205,7 +199,7 @@ public class LegacyItemDb extends AbstractItemDb {
             }
             retval = ess.provider(SpawnEggProvider.class).createEggItem(type);
         } else if (mat.name().endsWith("POTION")
-            && VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_11_R01)) { // Only apply this to pre-1.11 as items.csv might only work in 1.11
+                && VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_11_R01)) { // Only apply this to pre-1.11 as items.csv might only work in 1.11
             retval = ess.provider(PotionMetaProvider.class).createPotionItem(mat, metaData);
         } else {
             retval.setDurability(metaData);

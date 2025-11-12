@@ -71,8 +71,8 @@ chat:
   # A list of Discord channels which should be logged to console.
   # If you want to use the channels below, remember to uncomment the line by removing the '#' before the '-'.
   relay-to-console:
-    #- primary
-    #- chat
+  #- primary
+  #- chat
 
 # Console relay settings
 # The console relay sends every message shown in the console to a Discord channel.

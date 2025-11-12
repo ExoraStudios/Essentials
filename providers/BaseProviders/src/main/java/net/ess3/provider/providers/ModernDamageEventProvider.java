@@ -13,13 +13,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 public class ModernDamageEventProvider implements DamageEventProvider {
     private final DamageSource MAGIC_SOURCE = DamageSource.builder(DamageType.MAGIC).build();
 
-    @Override
-    public EntityDamageEvent callDamageEvent(Player player, EntityDamageEvent.DamageCause cause, double damage) {
-        final EntityDamageEvent ede = new EntityDamageEvent(player, cause, MAGIC_SOURCE, damage);
-        player.getServer().getPluginManager().callEvent(ede);
-        return ede;
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -28,5 +21,12 @@ public class ModernDamageEventProvider implements DamageEventProvider {
         } catch (ClassNotFoundException ignored) {
             return false;
         }
+    }
+
+    @Override
+    public EntityDamageEvent callDamageEvent(Player player, EntityDamageEvent.DamageCause cause, double damage) {
+        final EntityDamageEvent ede = new EntityDamageEvent(player, cause, MAGIC_SOURCE, damage);
+        player.getServer().getPluginManager().callEvent(ede);
+        return ede;
     }
 }

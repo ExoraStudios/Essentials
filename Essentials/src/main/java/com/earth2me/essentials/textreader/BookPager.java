@@ -70,7 +70,7 @@ public class BookPager {
                 if (length >= charMax || (letter == ChatColor.COLOR_CHAR && length + 1 >= charMax)) {
                     int pos = pointer;
                     int rollback = 0;
-                    while (pos > start && pageLine.charAt(pos) != ' ' && pageLine.charAt(pos) != "\n".charAt(0)) {
+                    while (pos > start && pageLine.charAt(pos) != ' ' && pageLine.charAt(pos) != '\n') {
                         rollback++;
                         pos--;
                     }

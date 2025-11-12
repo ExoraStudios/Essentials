@@ -11,6 +11,7 @@ public class InteractionCommandArgument {
 
     /**
      * Builds a command argument.
+     *
      * @param name        The name of the argument to be shown to the Discord client.
      * @param description A brief description of the argument to be shown to the Discord client.
      * @param type        The type of argument.
@@ -25,6 +26,7 @@ public class InteractionCommandArgument {
 
     /**
      * Gets the name of this argument.
+     *
      * @return the name of the argument.
      */
     public String getName() {
@@ -33,6 +35,7 @@ public class InteractionCommandArgument {
 
     /**
      * Gets the description of this argument.
+     *
      * @return the description of the argument.
      */
     public String getDescription() {
@@ -41,6 +44,7 @@ public class InteractionCommandArgument {
 
     /**
      * Gets the type of this argument.
+     *
      * @return the argument type.
      */
     public InteractionCommandArgumentType getType() {
@@ -49,6 +53,7 @@ public class InteractionCommandArgument {
 
     /**
      * Whether or not this argument is required or not.
+     *
      * @return true if the argument is required.
      */
     public boolean isRequired() {

@@ -15,11 +15,7 @@ import net.ess3.api.TranslatableException;
 import net.essentialsx.api.v2.services.mail.MailMessage;
 import org.bukkit.Server;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.UUID;
+import java.util.*;
 
 public class Commandmail extends EssentialsCommand {
     private static int mailsPerMinute = 0;
@@ -202,7 +198,7 @@ public class Commandmail extends EssentialsCommand {
             user.sendTl("mailCleared");
             return;
         }
-        if (args.length >= 1 && "clearall".equalsIgnoreCase(args[0])){
+        if (args.length >= 1 && "clearall".equalsIgnoreCase(args[0])) {
             if (!user.isAuthorized("essentials.mail.clearall")) {
                 throw new TranslatableException("noPerm", "essentials.mail.clearall");
             }
@@ -241,7 +237,7 @@ public class Commandmail extends EssentialsCommand {
             }
             sender.sendTl("mailCleared");
             return;
-        } else if (args.length >= 1 && "clearall".equalsIgnoreCase(args[0])){
+        } else if (args.length >= 1 && "clearall".equalsIgnoreCase(args[0])) {
             ess.runTaskAsynchronously(new ClearAll());
             sender.sendTl("mailClearedAll");
             return;
@@ -290,28 +286,6 @@ public class Commandmail extends EssentialsCommand {
         throw new NotEnoughArgumentsException();
     }
 
-    private class SendAll implements Runnable {
-        private final IMessageRecipient messageRecipient;
-        private final String message;
-        private final long dateDiff;
-
-        SendAll(IMessageRecipient messageRecipient, String message, long dateDiff) {
-            this.messageRecipient = messageRecipient;
-            this.message = message;
-            this.dateDiff = dateDiff;
-        }
-
-        @Override
-        public void run() {
-            for (final UUID u : ess.getUsers().getAllUserUUIDs()) {
-                final User user = ess.getUsers().loadUncachedUser(u);
-                if (user != null) {
-                    user.sendMail(messageRecipient, message, dateDiff);
-                }
-            }
-        }
-    }
-
     @Override
     protected List<String> getTabCompleteOptions(final Server server, final User user, final String commandLabel, final String[] args) {
         if (args.length == 1) {
@@ -328,12 +302,12 @@ public class Commandmail extends EssentialsCommand {
             if (user.isAuthorized("essentials.mail.sendtempall")) {
                 options.add("sendtempall");
             }
-            if (user.isAuthorized("essentials.mail.clearall")){
+            if (user.isAuthorized("essentials.mail.clearall")) {
                 options.add("clearall");
             }
             return options;
         } else if (args.length == 2) {
-            if ((args[0].equalsIgnoreCase("send") && user.isAuthorized("essentials.mail.send")) || (args[0].equalsIgnoreCase("sendtemp") && user.isAuthorized("essentials.mail.sendtemp")) || ((args[0].equalsIgnoreCase("clear"))&& user.isAuthorized("essentials.mail.clear.others"))) {
+            if ((args[0].equalsIgnoreCase("send") && user.isAuthorized("essentials.mail.send")) || (args[0].equalsIgnoreCase("sendtemp") && user.isAuthorized("essentials.mail.sendtemp")) || ((args[0].equalsIgnoreCase("clear")) && user.isAuthorized("essentials.mail.clear.others"))) {
                 return getPlayers(server, user);
             } else if (args[0].equalsIgnoreCase("sendtempall") && user.isAuthorized("essentials.mail.sendtempall")) {
                 return COMMON_DATE_DIFFS;
@@ -382,6 +356,28 @@ public class Commandmail extends EssentialsCommand {
             return COMMON_DATE_DIFFS;
         }
         return Collections.emptyList();
+    }
+
+    private class SendAll implements Runnable {
+        private final IMessageRecipient messageRecipient;
+        private final String message;
+        private final long dateDiff;
+
+        SendAll(IMessageRecipient messageRecipient, String message, long dateDiff) {
+            this.messageRecipient = messageRecipient;
+            this.message = message;
+            this.dateDiff = dateDiff;
+        }
+
+        @Override
+        public void run() {
+            for (final UUID u : ess.getUsers().getAllUserUUIDs()) {
+                final User user = ess.getUsers().loadUncachedUser(u);
+                if (user != null) {
+                    user.sendMail(messageRecipient, message, dateDiff);
+                }
+            }
+        }
     }
 
     private class ClearAll implements Runnable {

@@ -1,29 +1,9 @@
 package com.earth2me.essentials;
 
-import org.bukkit.BlockChangeDelegate;
-import org.bukkit.Chunk;
-import org.bukkit.ChunkSnapshot;
-import org.bukkit.Difficulty;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.TreeType;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LightningStrike;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
@@ -522,12 +502,12 @@ public class FakeWorld implements World {
     }
 
     @Override
-    public void setDifficulty(Difficulty difficulty) {
+    public Difficulty getDifficulty() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Difficulty getDifficulty() {
+    public void setDifficulty(Difficulty difficulty) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

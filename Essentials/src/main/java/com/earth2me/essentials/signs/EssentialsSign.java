@@ -1,15 +1,7 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.ChargeException;
-import com.earth2me.essentials.CommandSource;
-import com.earth2me.essentials.MetaItemStack;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.utils.AdventureUtil;
-import com.earth2me.essentials.utils.FormatUtil;
-import com.earth2me.essentials.utils.MaterialUtil;
-import com.earth2me.essentials.utils.NumberUtil;
-import com.earth2me.essentials.utils.VersionUtil;
+import com.earth2me.essentials.*;
+import com.earth2me.essentials.utils.*;
 import net.ess3.api.IEssentials;
 import net.ess3.api.MaxMoneyException;
 import net.ess3.api.TranslatableException;
@@ -35,8 +27,8 @@ import java.util.Set;
 import static com.earth2me.essentials.I18n.tlLiteral;
 
 public class EssentialsSign {
-    private static final String SIGN_OWNER_KEY = "sign-owner";
     protected static final BigDecimal MINTRANSACTION = new BigDecimal("0.01");
+    private static final String SIGN_OWNER_KEY = "sign-owner";
     private static final Set<Material> EMPTY_SET = new HashSet<>();
     protected transient final String signName;
 
@@ -49,7 +41,7 @@ public class EssentialsSign {
         if (MaterialUtil.isSignPost(sign.getType()) && isValidSign(new BlockSign(sign))) {
             return true;
         }
-        final BlockFace[] directions = new BlockFace[] {BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
+        final BlockFace[] directions = new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
         for (final BlockFace blockFace : directions) {
             final Block signBlock = block.getRelative(blockFace);
             if (MaterialUtil.isWallSign(signBlock.getType()) || MaterialUtil.isWallHangingSign(signBlock.getType())) {

@@ -10,6 +10,17 @@ import org.bukkit.inventory.ItemStack;
 @ProviderData(description = "1.9-1.12.2 Spawn Egg Provider", weight = 1)
 public class ReflSpawnEggProvider implements SpawnEggProvider {
 
+    @ProviderTest
+    public static boolean test() {
+        try {
+            // There isn't a real good way to test this, but we can check if the Shulker class exists.
+            Class.forName("org.bukkit.entity.Shulker");
+            return true;
+        } catch (final Throwable ignored) {
+            return false;
+        }
+    }
+
     @Override
     public ItemStack createEggItem(final EntityType type) throws IllegalArgumentException {
         try {
@@ -25,17 +36,6 @@ public class ReflSpawnEggProvider implements SpawnEggProvider {
             return SpawnEggRefl.fromItemStack(eggItem).getSpawnedType();
         } catch (final Exception e) {
             throw new IllegalArgumentException(e.getMessage(), e.getCause());
-        }
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            // There isn't a real good way to test this, but we can check if the Shulker class exists.
-            Class.forName("org.bukkit.entity.Shulker");
-            return true;
-        } catch (final Throwable ignored) {
-            return false;
         }
     }
 }

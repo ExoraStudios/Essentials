@@ -31,11 +31,10 @@ public class ConsoleInjector extends AbstractAppender {
     private final JDADiscordService jda;
     private final BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
     private final SchedulingProvider.EssentialsTask task;
-    private boolean removed = false;
-
     private final AtomicLong lastRateLimitTime = new AtomicLong(0);
     private final AtomicInteger recentRateLimit = new AtomicInteger(0);
     private final AtomicInteger totalBackoffEvents = new AtomicInteger();
+    private boolean removed = false;
 
     public ConsoleInjector(JDADiscordService jda) {
         super("EssentialsX-ConsoleInjector", null, null, false);

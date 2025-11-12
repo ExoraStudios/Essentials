@@ -7,11 +7,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 @ProviderData(description = "1.11+ Item Unbreakable Provider", weight = 1)
 public class ModernItemUnbreakableProvider implements ItemUnbreakableProvider {
-    @Override
-    public void setUnbreakable(ItemMeta meta, boolean unbreakable) {
-        meta.setUnbreakable(unbreakable);
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -20,5 +15,10 @@ public class ModernItemUnbreakableProvider implements ItemUnbreakableProvider {
         } catch (final NoSuchMethodException ignored) {
             return false;
         }
+    }
+
+    @Override
+    public void setUnbreakable(ItemMeta meta, boolean unbreakable) {
+        meta.setUnbreakable(unbreakable);
     }
 }

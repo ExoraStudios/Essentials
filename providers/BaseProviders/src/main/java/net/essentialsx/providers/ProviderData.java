@@ -15,6 +15,7 @@ public @interface ProviderData {
 
     /**
      * If there is multiple providers for a given type that pass their {@link ProviderTest}, the one with the highest weight will be used.
+     *
      * @return the weight of the provider.
      */
     int weight() default 0;

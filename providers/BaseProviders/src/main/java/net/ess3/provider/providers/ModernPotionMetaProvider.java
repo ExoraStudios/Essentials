@@ -13,6 +13,17 @@ import java.util.Collection;
 
 @ProviderData(description = "1.20.6+ Potion Meta Provider", weight = 2)
 public class ModernPotionMetaProvider implements PotionMetaProvider {
+    @ProviderTest
+    public static boolean test() {
+        try {
+            // This provider was created due to Potion being removed in 1.20.6
+            Class.forName("org.bukkit.potion.Potion");
+            return false;
+        } catch (final Throwable ignored) {
+            return true;
+        }
+    }
+
     @Override
     public ItemStack createPotionItem(Material initial, int effectId) {
         throw new UnsupportedOperationException("This should never happen, if this happens please submit a bug report!");
@@ -100,17 +111,6 @@ public class ModernPotionMetaProvider implements PotionMetaProvider {
             stack.setType(Material.SPLASH_POTION);
         } else if (!isSplash && stack.getType() == Material.SPLASH_POTION) {
             stack.setType(Material.POTION);
-        }
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            // This provider was created due to Potion being removed in 1.20.6
-            Class.forName("org.bukkit.potion.Potion");
-            return false;
-        } catch (final Throwable ignored) {
-            return true;
         }
     }
 }

@@ -7,16 +7,6 @@ import org.bukkit.block.CreatureSpawner;
 
 @ProviderData(description = "1.12+ Spawner Block Provider", weight = 1)
 public class BukkitSpawnerBlockProvider implements SpawnerBlockProvider {
-    @Override
-    public void setMaxSpawnDelay(final CreatureSpawner spawner, final int delay) {
-        spawner.setMaxSpawnDelay(delay);
-    }
-
-    @Override
-    public void setMinSpawnDelay(final CreatureSpawner spawner, final int delay) {
-        spawner.setMinSpawnDelay(delay);
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -25,5 +15,15 @@ public class BukkitSpawnerBlockProvider implements SpawnerBlockProvider {
         } catch (final NoSuchMethodException ignored) {
             return false;
         }
+    }
+
+    @Override
+    public void setMaxSpawnDelay(final CreatureSpawner spawner, final int delay) {
+        spawner.setMaxSpawnDelay(delay);
+    }
+
+    @Override
+    public void setMinSpawnDelay(final CreatureSpawner spawner, final int delay) {
+        spawner.setMinSpawnDelay(delay);
     }
 }

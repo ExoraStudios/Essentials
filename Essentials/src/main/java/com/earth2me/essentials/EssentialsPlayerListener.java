@@ -8,37 +8,20 @@ import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
 import com.earth2me.essentials.textreader.TextPager;
 import com.earth2me.essentials.userstorage.ModernUserMap;
-import com.earth2me.essentials.utils.AdventureUtil;
-import com.earth2me.essentials.utils.CommonPlaceholders;
-import com.earth2me.essentials.utils.DateUtil;
-import com.earth2me.essentials.utils.FormatUtil;
-import com.earth2me.essentials.utils.LocationUtil;
-import com.earth2me.essentials.utils.MaterialUtil;
-import com.earth2me.essentials.utils.VersionUtil;
+import com.earth2me.essentials.utils.*;
 import io.papermc.lib.PaperLib;
 import io.papermc.paper.ban.BanListType;
 import io.papermc.paper.event.connection.configuration.AsyncPlayerConnectionConfigureEvent;
 import io.papermc.paper.event.player.PlayerServerFullCheckEvent;
 import net.ess3.api.IEssentials;
 import net.ess3.api.events.AfkStatusChangeEvent;
-import net.ess3.provider.CommandSendListenerProvider;
-import net.ess3.provider.FormattedCommandAliasProvider;
-import net.ess3.provider.InventoryViewProvider;
-import net.ess3.provider.KnownCommandsProvider;
-import net.ess3.provider.TickCountProvider;
-import net.ess3.provider.SchedulingProvider;
+import net.ess3.provider.*;
 import net.ess3.provider.providers.BukkitCommandSendListenerProvider;
 import net.ess3.provider.providers.PaperCommandSendListenerProvider;
 import net.essentialsx.PaperAdventureSmuggler;
 import net.essentialsx.api.v2.events.AsyncUserDataLoadEvent;
 import net.kyori.adventure.text.Component;
-import org.bukkit.BanEntry;
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.FormattedCommandAlias;
 import org.bukkit.command.PluginCommand;
@@ -48,24 +31,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerEggThrowEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -75,15 +42,8 @@ import org.bukkit.inventory.PlayerInventory;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.text.NumberFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -154,9 +114,9 @@ public class EssentialsPlayerListener implements Listener, Runnable {
             ess.getServer().getPluginManager().registerEvents(new ArrowPickupListener(), ess);
         }
 
-        if (isGameEventEvent()) {
-            ess.getServer().getPluginManager().registerEvents(new SculkListener1_17(), ess);
-        }
+        //   if (isGameEventEvent()) {
+        //      ess.getServer().getPluginManager().registerEvents(new SculkListener1_17(), ess);
+        // }
 
         if (isEntityPickupEvent()) {
             ess.getServer().getPluginManager().registerEvents(new PickupListener1_12(), ess);
@@ -314,6 +274,8 @@ public class EssentialsPlayerListener implements Listener, Runnable {
         }
 
         user.startTransaction();
+
+        /*
         if (ess.getSettings().removeGodOnDisconnect() && user.isGodModeEnabled()) {
             user.setGodModeEnabled(false);
         }
@@ -321,6 +283,8 @@ public class EssentialsPlayerListener implements Listener, Runnable {
             user.setLeavingHidden(true);
             user.setVanished(false);
         }
+         */
+
         user.setLogoutLocation();
         if (user.isRecipeSee()) {
             ess.provider(InventoryViewProvider.class).getTopInventory(user.getBase().getOpenInventory()).clear();
@@ -328,9 +292,12 @@ public class EssentialsPlayerListener implements Listener, Runnable {
 
         final Player quitting = user.getBase();
         final InventoryViewProvider provider = ess.provider(InventoryViewProvider.class);
+
+        /*
         for (final User uviewer : ess.getOnlineUsers()) {
             if (!uviewer.isInvSee()) continue;
             final Player vp = uviewer.getBase();
+
             ess.scheduleEntityDelayedTask(vp, () -> {
                 final Inventory top = provider.getTopInventory(vp.getOpenInventory());
                 final InventoryHolder holder = top == null ? null : top.getHolder();
@@ -339,13 +306,14 @@ public class EssentialsPlayerListener implements Listener, Runnable {
                 }
             });
         }
+         */
 
         user.updateActivity(false, AfkStatusChangeEvent.Cause.QUIT);
         if (!user.isHidden()) {
             user.setLastLogout(System.currentTimeMillis());
         }
-        user.stopTransaction();
 
+        user.stopTransaction();
         user.dispose();
     }
 
@@ -437,6 +405,7 @@ public class EssentialsPlayerListener implements Listener, Runnable {
         // Check for new username. If they don't want the message, let's just say it's false.
         final boolean newUsername = ess.getSettings().isCustomNewUsernameMessage() && lastAccountName != null && !lastAccountName.equals(user.getBase().getName());
 
+        /*
         if (!ess.getVanishedPlayersNew().isEmpty() && !user.isAuthorized("essentials.vanish.see")) {
             for (final String p : ess.getVanishedPlayersNew()) {
                 final Player toVanish = ess.getServer().getPlayerExact(p);
@@ -447,7 +416,8 @@ public class EssentialsPlayerListener implements Listener, Runnable {
                     }
                 }
             }
-        }
+         */
+
 
         if (user.isAuthorized("essentials.sleepingignored")) {
             user.getBase().setSleepingIgnored(true);
@@ -504,13 +474,14 @@ public class EssentialsPlayerListener implements Listener, Runnable {
             }
         }
 
+        /*
         if (user.isAuthorized("essentials.updatecheck")) {
             ess.runTaskAsynchronously(() -> {
                 for (final Component component : ess.getUpdateChecker().getVersionMessages(false, false, user.getSource())) {
                     user.sendComponent(component);
                 }
             });
-        }
+         */
 
         if (user.isAuthorized("essentials.fly.safelogin")) {
             user.getBase().setFallDistance(0);
@@ -528,6 +499,7 @@ public class EssentialsPlayerListener implements Listener, Runnable {
             user.getBase().setWalkSpeed(0.2f);
         }
 
+        /*
         if (user.isSocialSpyEnabled() && !user.isAuthorized("essentials.socialspy")) {
             user.setSocialSpyEnabled(false);
             ess.getLogger().log(Level.INFO, "Set socialspy to false for {0} because they had it enabled without permission.", user.getName());
@@ -537,6 +509,7 @@ public class EssentialsPlayerListener implements Listener, Runnable {
             user.setGodModeEnabled(false);
             ess.getLogger().log(Level.INFO, "Set god mode to false for {0} because they had it enabled without permission.", user.getName());
         }
+         */
 
         user.setConfirmingClearCommand(null);
         user.getConfirmingPayments().clear();
@@ -616,87 +589,77 @@ public class EssentialsPlayerListener implements Listener, Runnable {
         }
     }
 
-    private final class LoginListenerPre1_21 implements Listener {
-        @EventHandler(priority = EventPriority.LOW)
-        public void onPlayerLoginBanned(final PlayerLoginEvent event) {
-            if (event.getResult() == PlayerLoginEvent.Result.KICK_BANNED) {
-                BanEntry<?> banEntry = ess.getServer().getBanList(BanList.Type.NAME).getBanEntry(event.getPlayer().getName());
-                if (banEntry != null) {
-                    final Date banExpiry = banEntry.getExpiration();
-                    if (banExpiry != null) {
-                        final String expiry = DateUtil.formatDateDiff(banExpiry.getTime());
-                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("tempbanJoin", expiry, banEntry.getReason())));
-                    } else {
-                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banJoin", banEntry.getReason())));
-                    }
-                } else {
-                    banEntry = ess.getServer().getBanList(BanList.Type.IP).getBanEntry(event.getAddress().getHostAddress());
-                    if (banEntry != null) {
-                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banIpJoin", banEntry.getReason())));
-                    }
-                }
-            }
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerChangedWorld(final PlayerChangedWorldEvent event) {
+        final User user = ess.getUser(event.getPlayer());
+        final String newWorld = event.getPlayer().getLocation().getWorld().getName();
+        user.setDisplayNick();
+        updateCompass(user);
+        if (ess.getSettings().getNoGodWorlds().contains(newWorld) && user.isGodModeEnabledRaw()) {
+            // Player god mode is never disabled in order to retain it when changing worlds once more.
+            // With that said, players will still take damage as per the result of User#isGodModeEnabled()
+            user.sendTl("noGodWorldWarning");
         }
 
-        @EventHandler(priority = EventPriority.HIGH)
-        public void onPlayerLogin(final PlayerLoginEvent event) {
-            if (event.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
-                final User kfuser = ess.getUser(event.getPlayer());
-                if (kfuser != null) {
-                    kfuser.update(event.getPlayer());
-                    if (kfuser.isAuthorized("essentials.joinfullserver")) {
-                        event.allow();
-                        return;
-                    }
-                }
-
-                if (ess.getSettings().isCustomServerFullMessage()) {
-                    event.disallow(PlayerLoginEvent.Result.KICK_FULL, tlLiteral("serverFull"));
-                }
-            }
+        if (!user.getWorld().getName().equals(newWorld)) {
+            user.sendTl("currentWorld", newWorld);
         }
+
+        //    if (user.isVanished()) {
+        //      user.setVanished(user.isAuthorized("essentials.vanish"));
+        //  }
     }
 
-    private final class LoginListener1_21 implements Listener {
-        @EventHandler(priority = EventPriority.HIGH)
-        public void onPlayerListFull(final PlayerServerFullCheckEvent event) {
-            if (ess.getPermissionsHandler().isOfflinePermissionSet(event.getPlayerProfile().getId(), "essentials.joinfullserver")) {
-                event.allow(true);
-                return;
-            }
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerInteract(final PlayerInteractEvent event) {
+        boolean updateActivity = true;
 
-            if (ess.getSettings().isCustomServerFullMessage()) {
-                PaperAdventureSmuggler.smugglePlayerServerFullCheckEvent(event, AdventureUtil.miniToLegacy(tlLiteral("serverFull")));
-            }
+        switch (event.getAction()) {
+            case RIGHT_CLICK_BLOCK:
+                if (!event.isCancelled() && MaterialUtil.isBed(event.getClickedBlock().getType()) && ess.getSettings().getUpdateBedAtDaytime()) {
+                    if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_13_2_R01) && ((org.bukkit.block.data.type.Bed) event.getClickedBlock().getBlockData()).isOccupied()) {
+                        break;
+                    }
+                    final User player = ess.getUser(event.getPlayer());
+                    if (player.isAuthorized("essentials.sethome.bed") && player.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+                        player.getBase().setBedSpawnLocation(event.getClickedBlock().getLocation());
+                        // In 1.15 and above, vanilla sends its own bed spawn message.
+                        if (VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_15_R01)) {
+                            player.sendTl("bedSet", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
+                        }
+                    }
+                }
+                break;
+            case LEFT_CLICK_AIR:
+                if (event.getPlayer().isFlying()) {
+                    final User user = ess.getUser(event.getPlayer());
+                    if (user.isFlyClickJump()) {
+                        useFlyClickJump(user);
+                        break;
+                    }
+                }
+                // fall through
+
+                /*
+            case LEFT_CLICK_BLOCK:
+                if (event.getItem() != null && event.getItem().getType() != Material.AIR) {
+                    final User user = ess.getUser(event.getPlayer());
+                    if (user.hasPowerTools() && user.arePowerToolsEnabled() && usePowertools(user, event.getItem().getType())) {
+                        event.setCancelled(true);
+                    }
+                }
+                 */
+
+                break;
+            case PHYSICAL:
+                updateActivity = false;
+                break;
+            default:
+                break;
         }
 
-        @EventHandler(priority = EventPriority.LOW)
-        public void onPlayerKickBanned(final AsyncPlayerPreLoginEvent event) {
-            if (event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.KICK_BANNED) {
-                BanEntry<?> banEntry = ess.getServer().getBanList(BanListType.PROFILE).getBanEntry(event.getPlayerProfile());
-                if (banEntry != null) {
-                    final Date banExpiry = banEntry.getExpiration();
-                    if (banExpiry != null) {
-                        final String expiry = DateUtil.formatDateDiff(banExpiry.getTime());
-                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("tempbanJoin", expiry, banEntry.getReason())));
-                    } else {
-                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banJoin", banEntry.getReason())));
-                    }
-                } else {
-                    banEntry = ess.getServer().getBanList(BanListType.IP).getBanEntry(event.getAddress());
-                    if (banEntry != null) {
-                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banIpJoin", banEntry.getReason())));
-                    }
-                }
-            } else if (event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST) {
-                if (ess.getPermissionsHandler().isOfflinePermissionSet(event.getUniqueId(), "essentials.whitelist.bypass")) {
-                    event.allow();
-                    return;
-                }
-                if (ess.getSettings().isCustomWhitelistMessage()) {
-                    event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("whitelistKick")));
-                }
-            }
+        if (updateActivity) {
+            ess.getUser(event.getPlayer()).updateActivityOnInteract(true);
         }
     }
 
@@ -916,72 +879,67 @@ public class EssentialsPlayerListener implements Listener, Runnable {
         user.setFlightTick(-1);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerChangedWorld(final PlayerChangedWorldEvent event) {
-        final User user = ess.getUser(event.getPlayer());
-        final String newWorld = event.getPlayer().getLocation().getWorld().getName();
-        user.setDisplayNick();
-        updateCompass(user);
-        if (ess.getSettings().getNoGodWorlds().contains(newWorld) && user.isGodModeEnabledRaw()) {
-            // Player god mode is never disabled in order to retain it when changing worlds once more.
-            // With that said, players will still take damage as per the result of User#isGodModeEnabled()
-            user.sendTl("noGodWorldWarning");
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onInventoryClickEvent(final InventoryClickEvent event) {
+        Player refreshPlayer = null;
+        final InventoryViewProvider provider = ess.provider(InventoryViewProvider.class);
+        final Inventory top = provider.getTopInventory(event.getView());
+        final InventoryType type = top.getType();
+
+        final Inventory clickedInventory;
+
+        if (event.getRawSlot() < 0) {
+            clickedInventory = null;
+        } else {
+            clickedInventory = event.getRawSlot() < top.getSize() ? top : provider.getBottomInventory(event.getView());
         }
 
-        if (!user.getWorld().getName().equals(newWorld)) {
-            user.sendTl("currentWorld", newWorld);
-        }
-        if (user.isVanished()) {
-            user.setVanished(user.isAuthorized("essentials.vanish"));
-        }
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerInteract(final PlayerInteractEvent event) {
-        boolean updateActivity = true;
-
-        switch (event.getAction()) {
-            case RIGHT_CLICK_BLOCK:
-                if (!event.isCancelled() && MaterialUtil.isBed(event.getClickedBlock().getType()) && ess.getSettings().getUpdateBedAtDaytime()) {
-                    if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_13_2_R01) && ((org.bukkit.block.data.type.Bed) event.getClickedBlock().getBlockData()).isOccupied()) {
-                        break;
-                    }
-                    final User player = ess.getUser(event.getPlayer());
-                    if (player.isAuthorized("essentials.sethome.bed") && player.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
-                        player.getBase().setBedSpawnLocation(event.getClickedBlock().getLocation());
-                        // In 1.15 and above, vanilla sends its own bed spawn message.
-                        if (VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_15_R01)) {
-                            player.sendTl("bedSet", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
-                        }
-                    }
+        final User user = ess.getUser((Player) event.getWhoClicked());
+        if (type == InventoryType.PLAYER) {
+            final InventoryHolder invHolder = top.getHolder();
+            if (invHolder instanceof HumanEntity) {
+                final User invOwner = ess.getUser((Player) invHolder);
+                if (user.isInvSee() && (!user.isAuthorized("essentials.invsee.modify") || invOwner.isAuthorized("essentials.invsee.preventmodify") || !invOwner.getBase().isOnline())) {
+                    event.setCancelled(true);
+                    refreshPlayer = user.getBase();
                 }
-                break;
-            case LEFT_CLICK_AIR:
-                if (event.getPlayer().isFlying()) {
-                    final User user = ess.getUser(event.getPlayer());
-                    if (user.isFlyClickJump()) {
-                        useFlyClickJump(user);
-                        break;
-                    }
-                }
-                // fall through
-            case LEFT_CLICK_BLOCK:
-                if (event.getItem() != null && event.getItem().getType() != Material.AIR) {
-                    final User user = ess.getUser(event.getPlayer());
-                    if (user.hasPowerTools() && user.arePowerToolsEnabled() && usePowertools(user, event.getItem().getType())) {
-                        event.setCancelled(true);
-                    }
-                }
-                break;
-            case PHYSICAL:
-                updateActivity = false;
-                break;
-            default:
-                break;
+            }
+
+        } else if (type == InventoryType.ENDER_CHEST) {
+            if (user.isEnderSee() && !user.isAuthorized("essentials.enderchest.modify")) {
+                event.setCancelled(true);
+                refreshPlayer = user.getBase();
+            }
+
+        } else if (type == InventoryType.WORKBENCH) {
+            if (user.isRecipeSee()) {
+                event.setCancelled(true);
+                refreshPlayer = user.getBase();
+            }
+
+        } else if (type == InventoryType.CHEST && top.getSize() == 9) {
+            final InventoryHolder invHolder = top.getHolder();
+            if (invHolder instanceof HumanEntity && user.isInvSee() && event.getClick() != ClickType.MIDDLE) {
+                event.setCancelled(true);
+                refreshPlayer = user.getBase();
+            }
+
+        } else if (clickedInventory != null && clickedInventory.getType() == InventoryType.PLAYER) {
+            if (ess.getSettings().isDirectHatAllowed() && event.getClick() == ClickType.LEFT && event.getSlot() == 39
+                && event.getCursor().getType() != Material.AIR && event.getCursor().getType().getMaxDurability() == 0
+                && !MaterialUtil.isSkull(event.getCursor().getType())
+                && user.isAuthorized("essentials.hat") && !user.isAuthorized("essentials.hat.prevent-type." + event.getCursor().getType().name().toLowerCase())
+                && !isPreventBindingHat(user, (PlayerInventory) clickedInventory)) {
+                event.setCancelled(true);
+                final PlayerInventory inv = (PlayerInventory) clickedInventory;
+                final ItemStack head = inv.getHelmet();
+                inv.setHelmet(event.getCursor());
+                event.setCursor(head);
+            }
         }
 
-        if (updateActivity) {
-            ess.getUser(event.getPlayer()).updateActivityOnInteract(true);
+        if (refreshPlayer != null) {
+            ess.scheduleEntityDelayedTask(refreshPlayer, refreshPlayer::updateInventory, 1);
         }
     }
 
@@ -1011,6 +969,49 @@ public class EssentialsPlayerListener implements Listener, Runnable {
         }
     }
 
+    private final class LoginListenerPre1_21 implements Listener {
+
+        @EventHandler(priority = EventPriority.LOW)
+        public void onPlayerLoginBanned(final PlayerLoginEvent event) {
+            if (event.getResult() == PlayerLoginEvent.Result.KICK_BANNED) {
+                BanEntry<?> banEntry = ess.getServer().getBanList(BanList.Type.NAME).getBanEntry(event.getPlayer().getName());
+                if (banEntry != null) {
+                    final Date banExpiry = banEntry.getExpiration();
+                    if (banExpiry != null) {
+                        final String expiry = DateUtil.formatDateDiff(banExpiry.getTime());
+                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("tempbanJoin", expiry, banEntry.getReason())));
+                    } else {
+                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banJoin", banEntry.getReason())));
+                    }
+                } else {
+                    banEntry = ess.getServer().getBanList(BanList.Type.IP).getBanEntry(event.getAddress().getHostAddress());
+                    if (banEntry != null) {
+                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banIpJoin", banEntry.getReason())));
+                    }
+                }
+            }
+        }
+
+        @EventHandler(priority = EventPriority.HIGH)
+        public void onPlayerLogin(final PlayerLoginEvent event) {
+            if (event.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
+                final User kfuser = ess.getUser(event.getPlayer());
+                if (kfuser != null) {
+                    kfuser.update(event.getPlayer());
+                    if (kfuser.isAuthorized("essentials.joinfullserver")) {
+                        event.allow();
+                        return;
+                    }
+                }
+
+                if (ess.getSettings().isCustomServerFullMessage()) {
+                    event.disallow(PlayerLoginEvent.Result.KICK_FULL, tlLiteral("serverFull"));
+                }
+            }
+        }
+    }
+
+    /*
     private boolean usePowertools(final User user, final Material material) {
         final List<String> commandList = user.getPowertool(material);
         if (commandList == null || commandList.isEmpty()) {
@@ -1040,63 +1041,56 @@ public class EssentialsPlayerListener implements Listener, Runnable {
         }
         return used;
     }
+     */
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onInventoryClickEvent(final InventoryClickEvent event) {
-        Player refreshPlayer = null;
-        final InventoryViewProvider provider = ess.provider(InventoryViewProvider.class);
-        final Inventory top = provider.getTopInventory(event.getView());
-        final InventoryType type = top.getType();
+    private final class LoginListener1_21 implements Listener {
 
-        final Inventory clickedInventory;
-        if (event.getRawSlot() < 0) {
-            clickedInventory = null;
-        } else {
-            clickedInventory = event.getRawSlot() < top.getSize() ? top : provider.getBottomInventory(event.getView());
+        @EventHandler(priority = EventPriority.HIGH)
+        public void onPlayerListFull(final PlayerServerFullCheckEvent event) {
+            TaskUtil.EXECUTOR.execute(() -> {
+                final boolean hasPerm = ess.getPermissionsHandler().isOfflinePermissionSet(event.getPlayerProfile().getId(), "essentials.joinfullserver");
+
+                ess.scheduleGlobalDelayedTask(() -> {
+                    if (hasPerm) {
+                        event.allow(true);
+                        return;
+                    }
+
+                    if (ess.getSettings().isCustomServerFullMessage()) {
+                        PaperAdventureSmuggler.smugglePlayerServerFullCheckEvent(event, AdventureUtil.miniToLegacy(tlLiteral("serverFull")));
+                    }
+                });
+            });
         }
 
-        final User user = ess.getUser((Player) event.getWhoClicked());
-        if (type == InventoryType.PLAYER) {
-            final InventoryHolder invHolder = top.getHolder();
-            if (invHolder instanceof HumanEntity) {
-                final User invOwner = ess.getUser((Player) invHolder);
-                if (user.isInvSee() && (!user.isAuthorized("essentials.invsee.modify") || invOwner.isAuthorized("essentials.invsee.preventmodify") || !invOwner.getBase().isOnline())) {
-                    event.setCancelled(true);
-                    refreshPlayer = user.getBase();
+
+        @EventHandler(priority = EventPriority.LOW)
+        public void onPlayerKickBanned(final AsyncPlayerPreLoginEvent event) {
+            if (event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.KICK_BANNED) {
+                BanEntry<?> banEntry = ess.getServer().getBanList(BanListType.PROFILE).getBanEntry(event.getPlayerProfile());
+                if (banEntry != null) {
+                    final Date banExpiry = banEntry.getExpiration();
+                    if (banExpiry != null) {
+                        final String expiry = DateUtil.formatDateDiff(banExpiry.getTime());
+                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("tempbanJoin", expiry, banEntry.getReason())));
+                    } else {
+                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banJoin", banEntry.getReason())));
+                    }
+                } else {
+                    banEntry = ess.getServer().getBanList(BanListType.IP).getBanEntry(event.getAddress());
+                    if (banEntry != null) {
+                        event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("banIpJoin", banEntry.getReason())));
+                    }
+                }
+            } else if (event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST) {
+                if (ess.getPermissionsHandler().isOfflinePermissionSet(event.getUniqueId(), "essentials.whitelist.bypass")) {
+                    event.allow();
+                    return;
+                }
+                if (ess.getSettings().isCustomWhitelistMessage()) {
+                    event.setKickMessage(AdventureUtil.miniToLegacy(tlLiteral("whitelistKick")));
                 }
             }
-        } else if (type == InventoryType.ENDER_CHEST) {
-            if (user.isEnderSee() && !user.isAuthorized("essentials.enderchest.modify")) {
-                event.setCancelled(true);
-                refreshPlayer = user.getBase();
-            }
-        } else if (type == InventoryType.WORKBENCH) {
-            if (user.isRecipeSee()) {
-                event.setCancelled(true);
-                refreshPlayer = user.getBase();
-            }
-        } else if (type == InventoryType.CHEST && top.getSize() == 9) {
-            final InventoryHolder invHolder = top.getHolder();
-            if (invHolder instanceof HumanEntity && user.isInvSee() && event.getClick() != ClickType.MIDDLE) {
-                event.setCancelled(true);
-                refreshPlayer = user.getBase();
-            }
-        } else if (clickedInventory != null && clickedInventory.getType() == InventoryType.PLAYER) {
-            if (ess.getSettings().isDirectHatAllowed() && event.getClick() == ClickType.LEFT && event.getSlot() == 39
-                && event.getCursor().getType() != Material.AIR && event.getCursor().getType().getMaxDurability() == 0
-                && !MaterialUtil.isSkull(event.getCursor().getType())
-                && user.isAuthorized("essentials.hat") && !user.isAuthorized("essentials.hat.prevent-type." + event.getCursor().getType().name().toLowerCase())
-                && !isPreventBindingHat(user, (PlayerInventory) clickedInventory)) {
-                event.setCancelled(true);
-                final PlayerInventory inv = (PlayerInventory) clickedInventory;
-                final ItemStack head = inv.getHelmet();
-                inv.setHelmet(event.getCursor());
-                event.setCursor(head);
-            }
-        }
-
-        if (refreshPlayer != null) {
-            ess.scheduleEntityDelayedTask(refreshPlayer, refreshPlayer::updateInventory, 1);
         }
     }
 
@@ -1224,6 +1218,7 @@ public class EssentialsPlayerListener implements Listener, Runnable {
     }
 
     private final class SculkListener1_17 implements Listener {
+
         @EventHandler
         public void onGameEvent(final org.bukkit.event.block.BlockReceiveGameEvent event) {
             if (event.getEntity() instanceof Player && ess.getUser((Player) event.getEntity()).isVanished()) {

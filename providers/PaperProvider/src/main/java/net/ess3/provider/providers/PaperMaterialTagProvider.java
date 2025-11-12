@@ -17,6 +17,17 @@ public class PaperMaterialTagProvider implements MaterialTagProvider {
     private final Map<String, Tag<Material>> bukkitTagMap = new HashMap<>();
     private final Map<String, MaterialSetTag> paperTagMap = new HashMap<>();
 
+    @ProviderTest
+    public static boolean test() {
+        try {
+            Class.forName("org.bukkit.Tag");
+            Class.forName("com.destroystokyo.paper.MaterialTags");
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+
     @Override
     public boolean tagExists(String tagName) {
         if (tagName == null) {
@@ -75,16 +86,5 @@ public class PaperMaterialTagProvider implements MaterialTagProvider {
             }
         }
         return bukkitTagMap.get(tagName);
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            Class.forName("org.bukkit.Tag");
-            Class.forName("com.destroystokyo.paper.MaterialTags");
-            return true;
-        } catch (ClassNotFoundException ignored) {
-            return false;
-        }
     }
 }

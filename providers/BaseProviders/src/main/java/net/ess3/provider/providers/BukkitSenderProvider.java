@@ -20,10 +20,6 @@ public class BukkitSenderProvider implements CommandSender {
         this.hook = hook;
     }
 
-    public interface MessageHook {
-        void sendMessage(String message);
-    }
-
     @Override
     public void sendMessage(String message) {
         hook.sendMessage(message);
@@ -130,5 +126,9 @@ public class BukkitSenderProvider implements CommandSender {
     @Override
     public void setOp(boolean value) {
         base.setOp(value);
+    }
+
+    public interface MessageHook {
+        void sendMessage(String message);
     }
 }

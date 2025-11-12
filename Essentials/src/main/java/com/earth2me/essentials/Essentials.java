@@ -18,12 +18,7 @@
 
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.commands.EssentialsCommand;
-import com.earth2me.essentials.commands.IEssentialsCommand;
-import com.earth2me.essentials.commands.NoChargeException;
-import com.earth2me.essentials.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.commands.PlayerNotFoundException;
-import com.earth2me.essentials.commands.QuietAbortException;
+import com.earth2me.essentials.commands.*;
 import com.earth2me.essentials.config.EssentialsConfiguration;
 import com.earth2me.essentials.economy.EconomyLayers;
 import com.earth2me.essentials.economy.vault.VaultEconomyProvider;
@@ -44,63 +39,18 @@ import com.earth2me.essentials.updatecheck.UpdateChecker;
 import com.earth2me.essentials.userstorage.ModernUserMap;
 import com.earth2me.essentials.utils.AdventureUtil;
 import com.earth2me.essentials.utils.FormatUtil;
+import com.earth2me.essentials.utils.TaskUtil;
 import com.earth2me.essentials.utils.VersionUtil;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Lists;
 import io.papermc.lib.PaperLib;
-import net.ess3.api.Economy;
+import net.ess3.api.*;
 import net.ess3.api.IEssentials;
-import net.ess3.api.IItemDb;
-import net.ess3.api.IJails;
 import net.ess3.api.ISettings;
-import net.ess3.api.TranslatableException;
-import net.ess3.nms.refl.providers.ReflDataWorldInfoProvider;
-import net.ess3.nms.refl.providers.ReflFormattedCommandAliasProvider;
-import net.ess3.nms.refl.providers.ReflKnownCommandsProvider;
-import net.ess3.nms.refl.providers.ReflOnlineModeProvider;
-import net.ess3.nms.refl.providers.ReflPersistentDataProvider;
-import net.ess3.nms.refl.providers.ReflServerStateProvider;
-import net.ess3.nms.refl.providers.ReflSpawnEggProvider;
-import net.ess3.nms.refl.providers.ReflSpawnerBlockProvider;
-import net.ess3.nms.refl.providers.ReflSyncCommandsProvider;
-import net.ess3.provider.InventoryViewProvider;
-import net.ess3.provider.KnownCommandsProvider;
-import net.ess3.provider.PlayerLocaleProvider;
-import net.ess3.provider.ProviderListener;
-import net.ess3.provider.SchedulingProvider;
-import net.ess3.provider.ServerStateProvider;
-import net.ess3.provider.providers.BaseBannerDataProvider;
-import net.ess3.provider.providers.BaseInventoryViewProvider;
-import net.ess3.provider.providers.BlockMetaSpawnerItemProvider;
-import net.ess3.provider.providers.BukkitMaterialTagProvider;
-import net.ess3.provider.providers.BukkitSchedulingProvider;
-import net.ess3.provider.providers.BukkitSpawnerBlockProvider;
-import net.ess3.provider.providers.FixedHeightWorldInfoProvider;
-import net.ess3.provider.providers.FlatSpawnEggProvider;
-import net.ess3.provider.providers.FoliaSchedulingProvider;
-import net.ess3.provider.providers.LegacyBannerDataProvider;
-import net.ess3.provider.providers.LegacyBiomeNameProvider;
-import net.ess3.provider.providers.LegacyDamageEventProvider;
-import net.ess3.provider.providers.LegacyInventoryViewProvider;
-import net.ess3.provider.providers.LegacyItemUnbreakableProvider;
-import net.ess3.provider.providers.LegacyPlayerLocaleProvider;
-import net.ess3.provider.providers.LegacyPotionMetaProvider;
-import net.ess3.provider.providers.LegacySpawnEggProvider;
-import net.ess3.provider.providers.ModernDamageEventProvider;
-import net.ess3.provider.providers.ModernDataWorldInfoProvider;
-import net.ess3.provider.providers.ModernItemUnbreakableProvider;
-import net.ess3.provider.providers.ModernPersistentDataProvider;
-import net.ess3.provider.providers.ModernPlayerLocaleProvider;
-import net.ess3.provider.providers.ModernPotionMetaProvider;
-import net.ess3.provider.providers.ModernSignDataProvider;
-import net.ess3.provider.providers.ModernSyncCommandsProvider;
-import net.ess3.provider.providers.PaperBiomeKeyProvider;
-import net.ess3.provider.providers.PaperContainerProvider;
-import net.ess3.provider.providers.PaperKnownCommandsProvider;
-import net.ess3.provider.providers.PaperMaterialTagProvider;
-import net.ess3.provider.providers.PaperRecipeBookListener;
-import net.ess3.provider.providers.PaperSerializationProvider;
-import net.ess3.provider.providers.PaperServerStateProvider;
-import net.ess3.provider.providers.PaperTickCountProvider;
-import net.ess3.provider.providers.PrehistoricPotionMetaProvider;
+import net.ess3.nms.refl.providers.*;
+import net.ess3.provider.*;
+import net.ess3.provider.providers.*;
 import net.essentialsx.api.v2.services.BalanceTop;
 import net.essentialsx.api.v2.services.mail.MailService;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -110,20 +60,10 @@ import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.command.BlockCommandSender;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.PluginIdentifiableCommand;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.WorldLoadEvent;
@@ -132,20 +72,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -187,6 +120,9 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
     private transient RandomTeleport randomTeleport;
     private transient UpdateChecker updateChecker;
     private transient BukkitAudiences bukkitAudience;
+
+    private Cache<UUID, List<String>> TAB_COMPLETE_CACHE;
+
 
     static {
         EconomyLayers.init();
@@ -271,6 +207,11 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
 
             confList = new ArrayList<>();
             settings = new Settings(this);
+
+            TAB_COMPLETE_CACHE = CacheBuilder.newBuilder()
+                    .expireAfterWrite(settings.getTabCompleteCacheTime(), TimeUnit.MILLISECONDS)
+                    .build();
+
             confList.add(settings);
             execTimer.mark("Settings");
 
@@ -435,8 +376,8 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
             alternativeCommandsHandler = new AlternativeCommandsHandler(this);
 
             timer = new EssentialsTimer(this);
-            scheduleGlobalRepeatingTask(timer, 1000, 50);
 
+            runTaskTimerAsynchronously(timer, 1000, 50);
             runTaskTimerAsynchronously(this.playerListener, 1L, 2L);
 
             Economy.setEss(this);
@@ -503,8 +444,8 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
         this.playerListener = new EssentialsPlayerListener(this);
         this.playerListener.registerEvents();
 
-        final EssentialsBlockListener blockListener = new EssentialsBlockListener(this);
-        pm.registerEvents(blockListener, this);
+        // final EssentialsBlockListener blockListener = new EssentialsBlockListener(this);
+        //   pm.registerEvents(blockListener, this);
 
         final SignBlockListener signBlockListener = new SignBlockListener(this);
         pm.registerEvents(signBlockListener, this);
@@ -592,6 +533,8 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
         EssentialsConfiguration.shutdownExecutor();
 
         HandlerList.unregisterAll(this);
+
+        TaskUtil.EXECUTOR.shutdown();
     }
 
     @Override
@@ -640,16 +583,36 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
     }
 
     @Override
-    public List<String> onTabComplete(final CommandSender sender, final Command command, final String commandLabel, final String[] args) {
+    public List<String> onTabComplete(final @NotNull CommandSender sender, final @NotNull Command command, final @NotNull String commandLabel, final String[] args) {
         return onTabCompleteEssentials(sender, command, commandLabel, args, Essentials.class.getClassLoader(),
-            "com.earth2me.essentials.commands.Command", "essentials.", null);
+                "com.earth2me.essentials.commands.Command", "essentials.", null);
     }
 
+    protected List<String> getPlayers(final Player player) {
+        try {
+            return TAB_COMPLETE_CACHE.get(player.getUniqueId(), () -> {
+                final List<String> players = new ArrayList<>();
+                for (Player user : Bukkit.getOnlinePlayers()) {
+                    if (player.canSee(user)) {
+                        players.add(user.getName());
+                    }
+                }
+                return players;
+            });
+        } catch (ExecutionException e) {
+            throw new RuntimeException("Failed to load " + player.getName(), e);
+        }
+    }
     @Override
-    public List<String> onTabCompleteEssentials(final CommandSender cSender, final Command command, final String commandLabel, final String[] args,
-                                                final ClassLoader classLoader, final String commandPath, final String permissionPrefix,
-                                                final IEssentialsModule module) {
-        if (!getSettings().isCommandOverridden(command.getName()) && (!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName()))) {
+    public List<String> onTabCompleteEssentials(final CommandSender cSender, final Command command, final String commandLabel, final String[] args, final ClassLoader classLoader, final String commandPath, final String permissionPrefix, final IEssentialsModule module) {
+
+        if (!settings.isTabCompletable(command.getName())) {
+            return StringUtil.copyPartialMatches(args[args.length - 1], getPlayers((Player) cSender), Lists.newArrayList());
+        }
+
+        User user = getUser((Player) cSender);
+
+        if ((!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName()))) {
             final Command pc = alternativeCommandsHandler.getAlternative(commandLabel);
             if (pc instanceof PluginCommand) {
                 try {
@@ -664,12 +627,6 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
         }
 
         try {
-            // Note: The tab completer is always a player, even when tab-completing in a command block
-            User user = null;
-            if (cSender instanceof Player) {
-                user = getUser((Player) cSender);
-            }
-
             final CommandSource sender = new CommandSource(this, cSender);
 
             // Check for disabled commands
@@ -1095,6 +1052,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
         if (base.getClass() != UUIDPlayer.class || user.getBase() == null) {
             user.update(base);
         }
+
         return user;
     }
 
@@ -1429,6 +1387,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
         return (Collection<Player>) getServer().getOnlinePlayers();
     }
 
+
     @Override
     public Iterable<User> getOnlineUsers() {
         final List<User> onlineUsers = new ArrayList<>();
@@ -1479,7 +1438,9 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials {
 
         @EventHandler(priority = EventPriority.LOW)
         public void onWorldLoad(final WorldLoadEvent event) {
-            PermissionsDefaults.registerBackDefaultFor(event.getWorld());
+            TaskUtil.EXECUTOR.execute(() -> {
+                PermissionsDefaults.registerBackDefaultFor(event.getWorld());
+            });
         }
 
         @Override

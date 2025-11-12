@@ -34,6 +34,15 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP {
         instance.xmpp.updatePresence();
     }
 
+    public static Logger getWrappedLogger() {
+        try {
+            return EssentialsLogger.getLoggerProvider("EssentialsXMPP");
+        } catch (Throwable ignored) {
+            // In case Essentials isn't installed/loaded
+            return Logger.getLogger("EssentialsXMPP");
+        }
+    }
+
     @Override
     public void onEnable() {
         EssentialsLogger.updatePluginLogger(this);
@@ -61,15 +70,6 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP {
         if (metrics == null) {
             metrics = new MetricsWrapper(this, 3818, true);
             metrics.addCustomChart(new SimplePie("config-valid", () -> xmpp.isConfigValid() ? "yes" : "no"));
-        }
-    }
-
-    public static Logger getWrappedLogger() {
-        try {
-            return EssentialsLogger.getLoggerProvider("EssentialsXMPP");
-        } catch (Throwable ignored) {
-            // In case Essentials isn't installed/loaded
-            return Logger.getLogger("EssentialsXMPP");
         }
     }
 

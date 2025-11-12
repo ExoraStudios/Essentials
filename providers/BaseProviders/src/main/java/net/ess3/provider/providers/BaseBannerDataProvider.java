@@ -32,6 +32,17 @@ public class BaseBannerDataProvider implements BannerDataProvider {
         materialToDyeMap.put(Material.BROWN_BANNER, DyeColor.BROWN);
     }
 
+    @ProviderTest
+    public static boolean test() {
+        try {
+            //noinspection unused
+            final Material needAVariable = Material.LIGHT_BLUE_BANNER;
+            return true;
+        } catch (final Throwable t) {
+            return false;
+        }
+    }
+
     @Override
     public DyeColor getBaseColor(ItemStack stack) {
         return materialToDyeMap.get(stack.getType());
@@ -42,17 +53,6 @@ public class BaseBannerDataProvider implements BannerDataProvider {
         final Material material = materialToDyeMap.inverse().get(color);
         if (material != null) {
             stack.setType(material);
-        }
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            //noinspection unused
-            final Material needAVariable = Material.LIGHT_BLUE_BANNER;
-            return true;
-        } catch (final Throwable t) {
-            return false;
         }
     }
 }

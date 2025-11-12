@@ -6,12 +6,14 @@ package net.essentialsx.api.v2.services.discord;
 public interface InteractionChannel {
     /**
      * Gets the name of this channel.
+     *
      * @return this channel's name.
      */
     String getName();
 
     /**
      * Gets the ID of this channel.
+     *
      * @return this channel's ID.
      */
     String getId();

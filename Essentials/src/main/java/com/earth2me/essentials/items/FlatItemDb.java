@@ -20,14 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FlatItemDb extends AbstractItemDb {
@@ -62,8 +55,8 @@ public class FlatItemDb extends AbstractItemDb {
         this.reset();
 
         final String json = file.getLines().stream()
-            .filter(line -> !line.startsWith("#"))
-            .collect(Collectors.joining());
+                .filter(line -> !line.startsWith("#"))
+                .collect(Collectors.joining());
 
         this.loadJSON(String.join("\n", json));
 
@@ -101,7 +94,7 @@ public class FlatItemDb extends AbstractItemDb {
             if (valid) {
                 allAliases.add(key);
             } else {
-                ess.getLogger().warning(String.format("Failed to add item: \"%s\": %s", key, element.toString()));
+                ess.getLogger().warning(String.format("Failed to add item: \"%s\": %s", key, element));
             }
         }
     }
@@ -300,10 +293,10 @@ public class FlatItemDb extends AbstractItemDb {
         }
 
         public static class EssentialPotionData {
-            private PotionType type;
-            private String fallbackType;
             private final boolean upgraded;
             private final boolean extended;
+            private PotionType type;
+            private String fallbackType;
 
             EssentialPotionData(PotionType type, boolean upgraded, boolean extended) {
                 this.type = type;
@@ -334,9 +327,9 @@ public class FlatItemDb extends AbstractItemDb {
                 if (o == null || getClass() != o.getClass()) return false;
                 final EssentialPotionData that = (EssentialPotionData) o;
                 return upgraded == that.upgraded &&
-                    extended == that.extended &&
-                    // Use the getters here to ensure the fallbacks are being used
-                    getType() == that.getType();
+                        extended == that.extended &&
+                        // Use the getters here to ensure the fallbacks are being used
+                        getType() == that.getType();
             }
 
             @Override

@@ -6,14 +6,7 @@ import com.earth2me.essentials.utils.NumberUtil;
 import net.ess3.api.TranslatableException;
 import org.bukkit.Server;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.earth2me.essentials.I18n.tlLiteral;
 
@@ -43,7 +36,7 @@ public final class PlayerList {
 
             final String strippedNick = FormatUtil.stripFormat(user.getNickname());
             if (ess.getSettings().realNamesOnList() && strippedNick != null && !strippedNick.equals(user.getName())) {
-                groupString.append(" ").append(tlLiteral("listRealName",user.getName()));
+                groupString.append(" ").append(tlLiteral("listRealName", user.getName()));
             }
             groupString.append("<white>");
         }
@@ -125,14 +118,14 @@ public final class PlayerList {
             throw new TranslatableException("groupDoesNotExist");
         }
         final String displayGroupName = Character.toTitleCase(groupName.charAt(0)) +
-            groupName.substring(1);
+                groupName.substring(1);
         return outputFormat(displayGroupName, listUsers(ess, users, ", "));
     }
 
     // Build the output string
     public static String outputFormat(final String group, final String message) {
         return tlLiteral("listGroupTag", FormatUtil.replaceFormat(group)) +
-            message;
+                message;
     }
 
     public static List<String> prepareGroupedList(final IEssentials ess, final CommandSource source, final String commandLabel, final Map<String, List<User>> playerList) {

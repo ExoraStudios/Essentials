@@ -8,11 +8,7 @@ import com.earth2me.essentials.signs.EssentialsSign;
 import com.earth2me.essentials.signs.Signs;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.SimpleTextInput;
-import com.earth2me.essentials.utils.AdventureUtil;
-import com.earth2me.essentials.utils.EnumUtil;
-import com.earth2me.essentials.utils.FormatUtil;
-import com.earth2me.essentials.utils.LocationUtil;
-import com.earth2me.essentials.utils.NumberUtil;
+import com.earth2me.essentials.utils.*;
 import net.ess3.api.IEssentials;
 import net.ess3.provider.KnownCommandsProvider;
 import net.ess3.provider.SyncCommandsProvider;
@@ -20,11 +16,7 @@ import net.essentialsx.api.v2.ChatType;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.tag.Tag;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
@@ -37,18 +29,8 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -159,6 +141,9 @@ public class Settings implements net.ess3.api.ISettings {
     private Set<String> multiplierPerms;
     private BigDecimal defaultMultiplier;
     private List<String> afkTimeoutCommands = Collections.emptyList();
+
+    private List<String> tabCompletableCommands;
+    private long tabCompleteCacheTimeMs;
 
     public Settings(final IEssentials ess) {
         this.ess = ess;
@@ -395,6 +380,15 @@ public class Settings implements net.ess3.api.ISettings {
             return true;
         }
         return false;
+    }
+
+    private List<String> _getTabCompletableCommands() {
+        return config.getList("tab-completable-commands", String.class);
+    }
+
+
+    private long _getTabCompleteCacheTime() {
+        return config.getLong("tab-complete-cache-time-ms", 60000L);
     }
 
     private List<String> _getOverriddenCommands() {
@@ -833,6 +827,9 @@ public class Settings implements net.ess3.api.ISettings {
         overriddenCommands = _getOverriddenCommands();
         playerCommands = _getPlayerCommands();
 
+        tabCompletableCommands = _getTabCompletableCommands();
+        tabCompleteCacheTimeMs = _getTabCompleteCacheTime();
+
         final KnownCommandsProvider knownCommandsProvider = ess.provider(KnownCommandsProvider.class);
 
         // This will be late loaded
@@ -1107,6 +1104,16 @@ public class Settings implements net.ess3.api.ISettings {
     @Override
     public boolean isEcoDisabled() {
         return economyDisabled;
+    }
+
+    @Override
+    public long getTabCompleteCacheTime() {
+        return tabCompleteCacheTimeMs;
+    }
+
+    @Override
+    public boolean isTabCompletable(String str) {
+        return tabCompletableCommands.contains(str);
     }
 
     @Override

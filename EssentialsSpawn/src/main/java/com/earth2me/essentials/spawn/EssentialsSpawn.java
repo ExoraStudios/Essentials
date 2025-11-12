@@ -23,6 +23,15 @@ public class EssentialsSpawn extends JavaPlugin implements IEssentialsSpawn {
     private transient SpawnStorage spawns;
     private transient MetricsWrapper metrics = null;
 
+    public static Logger getWrappedLogger() {
+        try {
+            return EssentialsLogger.getLoggerProvider("EssentialsSpawn");
+        } catch (Throwable ignored) {
+            // In case Essentials isn't installed/loaded
+            return Logger.getLogger("EssentialsSpawn");
+        }
+    }
+
     @Override
     public void onEnable() {
         EssentialsLogger.updatePluginLogger(this);
@@ -44,26 +53,17 @@ public class EssentialsSpawn extends JavaPlugin implements IEssentialsSpawn {
         final EventPriority respawnPriority = ess.getSettings().getRespawnPriority();
         if (respawnPriority != null) {
             pluginManager.registerEvent(InventoryCloseEvent.class, playerListener, respawnPriority, (ll, event) ->
-                ((EssentialsSpawnPlayerListener) ll).onPlayerRespawn((InventoryCloseEvent) event), this);
+                    ((EssentialsSpawnPlayerListener) ll).onPlayerRespawn((InventoryCloseEvent) event), this);
         }
 
         final EventPriority joinPriority = ess.getSettings().getSpawnJoinPriority();
         if (joinPriority != null) {
             pluginManager.registerEvent(PlayerJoinEvent.class, playerListener, joinPriority, (ll, event) ->
-                ((EssentialsSpawnPlayerListener) ll).onPlayerJoin((PlayerJoinEvent) event), this);
+                    ((EssentialsSpawnPlayerListener) ll).onPlayerJoin((PlayerJoinEvent) event), this);
         }
 
         if (metrics == null) {
             metrics = new MetricsWrapper(this, 3817, true);
-        }
-    }
-
-    public static Logger getWrappedLogger() {
-        try {
-            return EssentialsLogger.getLoggerProvider("EssentialsSpawn");
-        } catch (Throwable ignored) {
-            // In case Essentials isn't installed/loaded
-            return Logger.getLogger("EssentialsSpawn");
         }
     }
 

@@ -25,6 +25,10 @@ public class TransactionEvent extends Event {
         this.amount = amount;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * @return the user who initiated the transaction
      */
@@ -48,10 +52,6 @@ public class TransactionEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

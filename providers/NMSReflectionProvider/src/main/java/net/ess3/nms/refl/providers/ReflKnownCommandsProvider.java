@@ -19,8 +19,7 @@ public class ReflKnownCommandsProvider implements KnownCommandsProvider {
     public ReflKnownCommandsProvider() {
         Map<String, Command> knownCommands = new HashMap<>();
         try {
-            @SuppressWarnings("unchecked")
-            final Class<? extends Server> craftServerClass = (Class<? extends Server>) ReflUtil.getOBCClass("CraftServer");
+            @SuppressWarnings("unchecked") final Class<? extends Server> craftServerClass = (Class<? extends Server>) ReflUtil.getOBCClass("CraftServer");
             if (craftServerClass != null) {
                 final Field commandMapField = ReflUtil.getFieldCached(craftServerClass, "commandMap");
                 if (commandMapField != null) {

@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 
 /**
  * Fired when an Essentials sign is created.
- *
+ * <p>
  * This is primarily intended for use with EssentialsX's sign abstraction - external plugins should not listen on this event.
  */
 public class SignCreateEvent extends SignEvent {
@@ -16,12 +16,12 @@ public class SignCreateEvent extends SignEvent {
         super(sign, essSign, user);
     }
 
-    @Override
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

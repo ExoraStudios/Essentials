@@ -160,7 +160,7 @@ public class Commandhome extends EssentialsCommand {
                     final String namePart = args[0].substring(0, sepIndex);
                     final User otherUser;
                     try {
-                        otherUser = getPlayer(server, new String[] {namePart}, 0, true, true);
+                        otherUser = getPlayer(server, new String[]{namePart}, 0, true, true);
                     } catch (final Exception ex) {
                         return homes;
                     }

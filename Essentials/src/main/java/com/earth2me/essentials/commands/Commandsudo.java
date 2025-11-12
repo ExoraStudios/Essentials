@@ -21,7 +21,7 @@ public class Commandsudo extends EssentialsLoopCommand {
         final boolean multiple = !sender.isPlayer() || ess.getUser(sender.getPlayer()).isAuthorized("essentials.sudo.multiple");
 
         sender.sendTl("sudoRun", args[0], command, "");
-        loopOnlinePlayers(server, sender, false, multiple, args[0], new String[] {command});
+        loopOnlinePlayers(server, sender, false, multiple, args[0], new String[]{command});
     }
 
     @Override

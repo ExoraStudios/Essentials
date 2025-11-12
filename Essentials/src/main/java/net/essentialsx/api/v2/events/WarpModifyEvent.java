@@ -19,7 +19,7 @@ public class WarpModifyEvent extends Event implements Cancellable {
     private final Location newLocation;
     private final WarpModifyCause cause;
     private boolean cancelled;
-    
+
     /**
      * @param user        the {@link IUser} who is modifing the warp.
      * @param warpName    the name of the warp that's being altered.
@@ -33,6 +33,10 @@ public class WarpModifyEvent extends Event implements Cancellable {
         this.oldLocation = oldLocation;
         this.newLocation = newLocation;
         this.cause = cause;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     @Override
@@ -59,6 +63,7 @@ public class WarpModifyEvent extends Event implements Cancellable {
 
     /**
      * Gets the current location of the warp or null if it's being created or if the previous location's world is not loaded.
+     *
      * @return The warps new location or null.
      */
     public Location getOldLocation() {
@@ -67,17 +72,14 @@ public class WarpModifyEvent extends Event implements Cancellable {
 
     /**
      * Gets the new location this warp is being updated to, or null if it's being deleted.
+     *
      * @return The warps new location or null.
      */
     public Location getNewLocation() {
         return newLocation;
     }
-    
-    public HandlerList getHandlers() {
-        return handlers;
-    }
 
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers() {
         return handlers;
     }
 

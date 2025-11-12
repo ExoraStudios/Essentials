@@ -8,13 +8,6 @@ import org.bukkit.entity.Player;
 
 @ProviderData(description = "1.21.4+ Sync Commands Provider", weight = 1)
 public class ModernSyncCommandsProvider implements SyncCommandsProvider {
-    @Override
-    public void syncCommands() {
-        for (final Player player : Bukkit.getOnlinePlayers()) {
-            player.updateCommands();
-        }
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -23,6 +16,13 @@ public class ModernSyncCommandsProvider implements SyncCommandsProvider {
             return true;
         } catch (final Throwable ignored) {
             return false;
+        }
+    }
+
+    @Override
+    public void syncCommands() {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            player.updateCommands();
         }
     }
 }

@@ -7,12 +7,9 @@ import com.earth2me.essentials.config.entities.CommandCooldown;
 import com.earth2me.essentials.config.entities.LazyLocation;
 import com.earth2me.essentials.config.processors.DeleteIfIncompleteProcessor;
 import com.earth2me.essentials.config.processors.DeleteOnEmptyProcessor;
-import com.earth2me.essentials.config.serializers.BigDecimalTypeSerializer;
-import com.earth2me.essentials.config.serializers.CommandCooldownSerializer;
-import com.earth2me.essentials.config.serializers.LocationTypeSerializer;
-import com.earth2me.essentials.config.serializers.MailMessageSerializer;
-import com.earth2me.essentials.config.serializers.MaterialTypeSerializer;
+import com.earth2me.essentials.config.serializers.*;
 import com.earth2me.essentials.utils.AdventureUtil;
+import com.earth2me.essentials.utils.TaskUtil;
 import net.essentialsx.api.v2.services.mail.MailMessage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,14 +29,7 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -470,25 +460,33 @@ public class EssentialsConfiguration {
     }
 
     private void delaySave() {
-        if (saveHook != null) {
-            saveHook.run();
-        }
+        TaskUtil.EXECUTOR.execute(() -> {
 
-        pendingWrites.incrementAndGet();
-        try {
-            getExecutor().submit(new ConfigurationSaveTask(loader, () -> configurationNode.copy(), pendingWrites));
-        } catch (RejectedExecutionException rex) {
-            try {
-                synchronized (loader) {
-                    loader.save(configurationNode.copy());
+            if (saveHook != null) {
+                try {
+                    saveHook.run();
+                } catch (Throwable t) {
+                    Essentials.getWrappedLogger().log(Level.SEVERE, "Error in saveHook", t);
                 }
-            } catch (ConfigurateException e) {
-                Essentials.getWrappedLogger().log(Level.SEVERE, e.getMessage(), e);
-            } finally {
-                pendingWrites.decrementAndGet();
             }
-        }
+
+            pendingWrites.incrementAndGet();
+            try {
+                getExecutor().submit(new ConfigurationSaveTask(loader, () -> configurationNode.copy(), pendingWrites));
+            } catch (RejectedExecutionException rex) {
+                try {
+                    synchronized (loader) {
+                        loader.save(configurationNode.copy());
+                    }
+                } catch (ConfigurateException e) {
+                    Essentials.getWrappedLogger().log(Level.SEVERE, e.getMessage(), e);
+                } finally {
+                    pendingWrites.decrementAndGet();
+                }
+            }
+        });
     }
+
 
     public static void shutdownExecutor() {
         final ExecutorService exec = EXECUTOR_SERVICE;

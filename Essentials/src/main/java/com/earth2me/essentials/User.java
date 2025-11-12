@@ -6,13 +6,7 @@ import com.earth2me.essentials.economy.EconomyLayer;
 import com.earth2me.essentials.economy.EconomyLayers;
 import com.earth2me.essentials.messaging.IMessageRecipient;
 import com.earth2me.essentials.messaging.SimpleMessageRecipient;
-import com.earth2me.essentials.utils.AdventureUtil;
-import com.earth2me.essentials.utils.DateUtil;
-import com.earth2me.essentials.utils.EnumUtil;
-import com.earth2me.essentials.utils.FormatUtil;
-import com.earth2me.essentials.utils.NumberUtil;
-import com.earth2me.essentials.utils.TriState;
-import com.earth2me.essentials.utils.VersionUtil;
+import com.earth2me.essentials.utils.*;
 import com.google.common.collect.Lists;
 import net.ess3.api.IEssentials;
 import net.ess3.api.MaxMoneyException;
@@ -39,17 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -1068,14 +1052,18 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
 
     @Override
     public void sendMessage(final String message) {
-        if (!message.isEmpty()) {
-            base.sendMessage(message);
-        }
+        TaskUtil.EXECUTOR.execute(() -> {
+            if (!message.isEmpty()) {
+                base.sendMessage(message);
+            }
+        });
     }
 
     @Override
     public void sendComponent(ComponentLike component) {
-        ess.getBukkitAudience().player(base).sendMessage(component);
+        TaskUtil.EXECUTOR.execute(() -> {
+            ess.getBukkitAudience().player(base).sendMessage(component);
+        });
     }
 
     @Override
@@ -1086,12 +1074,14 @@ public class User extends UserData implements Comparable<User>, IMessageRecipien
 
     @Override
     public void sendTl(String tlKey, Object... args) {
-        final String translation = playerTl(tlKey, args);
-        if (translation.trim().isEmpty()) {
-            return;
-        }
+        TaskUtil.EXECUTOR.execute(() -> {
+            final String translation = playerTl(tlKey, args);
+            if (translation.trim().isEmpty()) {
+                return;
+            }
 
-        sendComponent(AdventureUtil.miniMessage().deserialize(translation));
+            sendComponent(AdventureUtil.miniMessage().deserialize(translation));
+        });
     }
 
     @Override

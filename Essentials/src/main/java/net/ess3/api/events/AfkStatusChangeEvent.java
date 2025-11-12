@@ -20,16 +20,16 @@ public class AfkStatusChangeEvent extends StatusChangeEvent {
         this.cause = cause;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public Cause getCause() {
         return cause;
     }
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 

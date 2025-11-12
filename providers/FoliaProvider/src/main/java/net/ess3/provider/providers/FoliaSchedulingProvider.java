@@ -90,7 +90,8 @@ public class FoliaSchedulingProvider implements SchedulingProvider, Listener {
 
     @Override
     public EssentialsTask runLocationalTaskRepeating(Location location, Runnable runnable, long delay, long period) {
-        final ScheduledTask task = plugin.getServer().getRegionScheduler().runAtFixedRate(plugin, location, scheduledTask -> runnable.run(), delay, period);;
+        final ScheduledTask task = plugin.getServer().getRegionScheduler().runAtFixedRate(plugin, location, scheduledTask -> runnable.run(), delay, period);
+        ;
         return task::cancel;
     }
 

@@ -48,8 +48,13 @@ public class HomeModifyEvent extends Event implements Cancellable {
         this.cause = cause;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the user who modified the home or null if the console modified the home.
+     *
      * @return The user who modified the home or null.
      */
     public IUser getUser() {
@@ -58,6 +63,7 @@ public class HomeModifyEvent extends Event implements Cancellable {
 
     /**
      * Gets the owner of the home being modified.
+     *
      * @return The user who owns the home.
      */
     public IUser getHomeOwner() {
@@ -67,6 +73,7 @@ public class HomeModifyEvent extends Event implements Cancellable {
     /**
      * Returns the location of the home when {@link #getCause()} returns {@link HomeModifyCause#CREATE} or {@link HomeModifyCause#RENAME},
      * returns the updated location of the home if it returns {@link HomeModifyCause#UPDATE}, or returns null if it returns {@link HomeModifyCause#DELETE}.
+     *
      * @return The location of the home or null.
      */
     public Location getNewLocation() {
@@ -76,6 +83,7 @@ public class HomeModifyEvent extends Event implements Cancellable {
     /**
      * Returns the location of the home when {@link #getCause()} returns {@link HomeModifyCause#RENAME} or {@link HomeModifyCause#DELETE},
      * returns the previous location of the home if it returns {@link HomeModifyCause#UPDATE}, or returns null if it returns {@link HomeModifyCause#CREATE}.
+     *
      * @return The location of the home or null.
      */
     public Location getOldLocation() {
@@ -85,6 +93,7 @@ public class HomeModifyEvent extends Event implements Cancellable {
     /**
      * Returns the name of the home when {@link #getCause()} returns {@link HomeModifyCause#CREATE} or {@link HomeModifyCause#UPDATE},
      * returns the updated name if it returns {@link HomeModifyCause#RENAME}, or returns null if it returns {@link HomeModifyCause#DELETE}.
+     *
      * @return The name of the home or null.
      */
     public String getNewName() {
@@ -94,6 +103,7 @@ public class HomeModifyEvent extends Event implements Cancellable {
     /**
      * Returns the name of the home when {@link #getCause()} returns {@link HomeModifyCause#UPDATE} or {@link HomeModifyCause#DELETE},
      * returns the previous name if it returns {@link HomeModifyCause#RENAME}, or returns null if it returns {@link HomeModifyCause#CREATE}.
+     *
      * @return The name of the home or null.
      */
     public String getOldName() {
@@ -102,15 +112,11 @@ public class HomeModifyEvent extends Event implements Cancellable {
 
     /**
      * Returns the underlying cause of this modification to a home.
+     *
      * @return The cause.
      */
     public HomeModifyCause getCause() {
         return cause;
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        this.canceled = cancel;
     }
 
     @Override
@@ -119,11 +125,12 @@ public class HomeModifyEvent extends Event implements Cancellable {
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return handlers;
+    public void setCancelled(boolean cancel) {
+        this.canceled = cancel;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public HandlerList getHandlers() {
         return handlers;
     }
 
@@ -132,6 +139,6 @@ public class HomeModifyEvent extends Event implements Cancellable {
      * Used by {@link HomeModifyEvent}.
      */
     public enum HomeModifyCause {
-      CREATE, DELETE, RENAME, UPDATE
+        CREATE, DELETE, RENAME, UPDATE
     }
 }

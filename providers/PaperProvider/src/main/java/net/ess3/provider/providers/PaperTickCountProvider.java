@@ -7,11 +7,6 @@ import org.bukkit.Bukkit;
 
 @ProviderData(description = "Paper Tick Count Provider")
 public class PaperTickCountProvider implements TickCountProvider {
-    @Override
-    public int getTickCount() {
-        return Bukkit.getCurrentTick();
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -20,5 +15,10 @@ public class PaperTickCountProvider implements TickCountProvider {
         } catch (final NoSuchMethodException ignored) {
             return false;
         }
+    }
+
+    @Override
+    public int getTickCount() {
+        return Bukkit.getCurrentTick();
     }
 }

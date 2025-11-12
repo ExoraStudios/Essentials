@@ -46,11 +46,11 @@ public class DiscordCommandSender {
         return new BukkitSenderProvider(consoleSender, hook);
     }
 
-    public interface CmdCallback {
-        void onMessage(String message);
-    }
-
     public CommandSender getSender() {
         return sender;
+    }
+
+    public interface CmdCallback {
+        void onMessage(String message);
     }
 }

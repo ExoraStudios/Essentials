@@ -7,6 +7,16 @@ import org.bukkit.World;
 
 @ProviderData(description = "1.17.1+ World Info Provider", weight = 2)
 public class ModernDataWorldInfoProvider implements WorldInfoProvider {
+    @ProviderTest
+    public static boolean test() {
+        try {
+            Class.forName("org.bukkit.generator.WorldInfo");
+            return true;
+        } catch (final ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+
     @Override
     public int getMaxHeight(World world) {
         return world.getMaxHeight();
@@ -20,15 +30,5 @@ public class ModernDataWorldInfoProvider implements WorldInfoProvider {
     @Override
     public int getMinHeight(World world) {
         return world.getMinHeight();
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            Class.forName("org.bukkit.generator.WorldInfo");
-            return true;
-        } catch (final ClassNotFoundException ignored) {
-            return false;
-        }
     }
 }

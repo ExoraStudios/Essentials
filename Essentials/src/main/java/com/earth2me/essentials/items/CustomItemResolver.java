@@ -8,11 +8,7 @@ import net.ess3.api.IItemDb;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CustomItemResolver implements IItemDb.ItemResolver, IConf {
     private final EssentialsConfiguration config;

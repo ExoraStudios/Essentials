@@ -11,6 +11,7 @@ import java.util.UUID;
 public interface DiscordLinkService {
     /**
      * Gets the Discord ID linked to the given {@link UUID} or {@code null} if none is present.
+     *
      * @param uuid the {@link UUID} of the player to lookup.
      * @return the Discord ID or {@code null}.
      */
@@ -18,6 +19,7 @@ public interface DiscordLinkService {
 
     /**
      * Checks if there is a Discord account linked to the given {@link UUID}.
+     *
      * @param uuid the {@link UUID} to check.
      * @return true if there is a Discord account linked to the given {@link UUID}.
      */
@@ -27,6 +29,7 @@ public interface DiscordLinkService {
 
     /**
      * Gets the {@link UUID} linked to the given Discord ID or {@code null} if none is present.
+     *
      * @param discordId The Discord ID to lookup.
      * @return the {@link UUID} or {@code null}.
      */
@@ -34,6 +37,7 @@ public interface DiscordLinkService {
 
     /**
      * Checks if there is a Minecraft account linked to the given Discord ID.
+     *
      * @param discordId the Discord ID to check.
      * @return true if there is a Minecraft account linked to the given Discord ID.
      */
@@ -50,14 +54,15 @@ public interface DiscordLinkService {
      * This method will return true if the accounts are successfully linked, or
      * false if either the provided {@link UUID} or {@link InteractionMember} are
      * already linked to another account.
+     *
      * @param uuid   The {@link UUID} of the target player.
      * @param member The {@link InteractionMember} to link to the target player.
+     * @return true if the accounts were linked successfully, otherwise false.
+     * @throws IllegalArgumentException if either of the {@link UUID} or {@link InteractionMember} are null.
      * @see net.essentialsx.api.v2.services.discord.DiscordService#getMemberById(String) to get an
      * {@link InteractionMember} by their ID.
      * @see #isLinked(UUID) to ensure the given {@link UUID} isn't already linked to an account.
      * @see #isLinked(String) to ensure the given {@link InteractionMember} isn't already linked to an account.
-     * @throws IllegalArgumentException if either of the {@link UUID} or {@link InteractionMember} are null.
-     * @return true if the accounts were linked successfully, otherwise false.
      */
     boolean linkAccount(final UUID uuid, final InteractionMember member);
 
@@ -66,9 +71,10 @@ public interface DiscordLinkService {
      * <p>
      * This will automatically trigger role unsync (if configured) for the given player if this method
      * returns {@code true}.
+     *
      * @param uuid The {@link UUID} of the player to unlink.
-     * @throws IllegalArgumentException if the provided {@link UUID} is null.
      * @return true if there was an account associated with the given {@link UUID}, otherwise false.
+     * @throws IllegalArgumentException if the provided {@link UUID} is null.
      */
     boolean unlinkAccount(final UUID uuid);
 
@@ -77,10 +83,11 @@ public interface DiscordLinkService {
      * <p>
      * This will automatically trigger role unsync (if configured) for the given {@link InteractionMember}
      * if this method returns {@code true}.
+     *
      * @param member The {@link InteractionMember} to unlink.
-     * @throws IllegalArgumentException if the provided {@link InteractionMember} is null.
      * @return true if there was a linked Minecraft account associated with the given
      * {@link InteractionMember}, otherwise false.
+     * @throws IllegalArgumentException if the provided {@link InteractionMember} is null.
      */
     boolean unlinkAccount(final InteractionMember member);
 

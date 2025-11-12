@@ -20,6 +20,10 @@ public class AsyncUserDataLoadEvent extends Event {
         this.joinMessage = joinMessage;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * @return The user whose data has been loaded.
      */
@@ -36,10 +40,6 @@ public class AsyncUserDataLoadEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

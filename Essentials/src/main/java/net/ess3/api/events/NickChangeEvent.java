@@ -18,6 +18,10 @@ public class NickChangeEvent extends StateChangeEvent implements Cancellable {
         this.newValue = value;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public String getValue() {
         return newValue;
     }
@@ -46,10 +50,6 @@ public class NickChangeEvent extends StateChangeEvent implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

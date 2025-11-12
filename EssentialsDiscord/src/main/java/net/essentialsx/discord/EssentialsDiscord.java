@@ -27,6 +27,15 @@ public class EssentialsDiscord extends JavaPlugin implements IEssentialsModule {
     private boolean isPAPI = false;
     private boolean isEssentialsChat = false;
 
+    public static Logger getWrappedLogger() {
+        try {
+            return EssentialsLogger.getLoggerProvider("EssentialsDiscord");
+        } catch (Throwable ignored) {
+            // In case Essentials isn't installed/loaded
+            return Logger.getLogger("EssentialsDiscord");
+        }
+    }
+
     @Override
     public void onEnable() {
         EssentialsLogger.updatePluginLogger(this);
@@ -69,15 +78,6 @@ public class EssentialsDiscord extends JavaPlugin implements IEssentialsModule {
                 }
                 jda.shutdown();
             }
-        }
-    }
-
-    public static Logger getWrappedLogger() {
-        try {
-            return EssentialsLogger.getLoggerProvider("EssentialsDiscord");
-        } catch (Throwable ignored) {
-            // In case Essentials isn't installed/loaded
-            return Logger.getLogger("EssentialsDiscord");
         }
     }
 

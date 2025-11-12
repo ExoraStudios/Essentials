@@ -9,6 +9,11 @@ import org.bukkit.inventory.ItemStack;
 
 @ProviderData(description = "1.21+ InventoryView Interface ABI Provider", weight = 1)
 public class BaseInventoryViewProvider implements InventoryViewProvider {
+    @ProviderTest
+    public static boolean test() {
+        return InventoryView.class.isInterface();
+    }
+
     @Override
     public Inventory getTopInventory(InventoryView view) {
         return view.getTopInventory();
@@ -27,10 +32,5 @@ public class BaseInventoryViewProvider implements InventoryViewProvider {
     @Override
     public void close(InventoryView view) {
         view.close();
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        return InventoryView.class.isInterface();
     }
 }

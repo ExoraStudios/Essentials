@@ -162,6 +162,10 @@ public interface ISettings extends IConf {
 
     void setDebug(boolean debug);
 
+    boolean isTabCompletable(String string);
+
+    long getTabCompleteCacheTime();
+
     boolean isEcoDisabled();
 
     @Deprecated

@@ -23,6 +23,10 @@ public class UserActionEvent extends Event {
         this.recipients = recipients;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public IUser getUser() {
         return user;
     }
@@ -37,10 +41,6 @@ public class UserActionEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

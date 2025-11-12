@@ -13,28 +13,13 @@ import net.ess3.api.TranslatableException;
 import net.ess3.provider.BannerDataProvider;
 import net.ess3.provider.ItemUnbreakableProvider;
 import net.ess3.provider.PotionMetaProvider;
-import org.bukkit.Color;
-import org.bukkit.DyeColor;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
+import org.bukkit.*;
 import org.bukkit.block.Banner;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ArmorMeta;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.FireworkEffectMeta;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
@@ -42,18 +27,15 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public class MetaItemStack {
     private static final Map<String, DyeColor> colorMap = new HashMap<>();
     private static final Map<String, FireworkEffect.Type> fireworkShape = new HashMap<>();
+    private static final Pattern splitPattern = Pattern.compile("[:+',;.]");
+    private static final Pattern hexPattern = Pattern.compile("#([0-9a-fA-F]{6})");
     private static boolean useNewSkullMethod = true;
 
     static {
@@ -65,8 +47,6 @@ public class MetaItemStack {
         }
     }
 
-    private static final Pattern splitPattern = Pattern.compile("[:+',;.]");
-    private static final Pattern hexPattern = Pattern.compile("#([0-9a-fA-F]{6})");
     private ItemStack stack;
     private FireworkEffect.Builder builder = FireworkEffect.builder();
     private PotionEffectType pEffectType;
@@ -338,9 +318,9 @@ public class MetaItemStack {
                 final String input = color[0];
                 if (input.startsWith("#")) { // Hex
                     meta.setColor(Color.fromRGB(
-                        Integer.valueOf(input.substring(1, 3), 16),
-                        Integer.valueOf(input.substring(3, 5), 16),
-                        Integer.valueOf(input.substring(5, 7), 16)));
+                            Integer.valueOf(input.substring(1, 3), 16),
+                            Integer.valueOf(input.substring(3, 5), 16),
+                            Integer.valueOf(input.substring(5, 7), 16)));
                 } else { // Int
                     meta.setColor(Color.fromRGB(Integer.parseInt(input)));
                 }

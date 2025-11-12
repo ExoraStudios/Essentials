@@ -1,22 +1,12 @@
 package com.earth2me.essentials.userstorage;
 
 import com.earth2me.essentials.utils.StringUtil;
+import com.earth2me.essentials.utils.TaskUtil;
 import com.google.common.io.Files;
 import net.ess3.api.IEssentials;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.io.*;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -88,44 +78,48 @@ public class ModernUUIDCache {
     }
 
     protected void updateCache(final UUID uuid, final String name) {
-        if (uuidCache.add(uuid)) {
-            pendingUuidWrite.set(true);
-        }
-        if (name != null) {
-            final String sanitizedName = getSanitizedName(name);
-            final UUID replacedUuid = nameToUuidMap.put(sanitizedName, uuid);
-            if (!uuid.equals(replacedUuid)) {
-                if (ess.getSettings().isDebug()) {
-                    ess.getLogger().log(Level.WARNING, "Replaced UUID during cache update for " + sanitizedName + ": " + replacedUuid + " -> " + uuid);
-                }
-                pendingNameWrite.set(true);
+        TaskUtil.EXECUTOR.execute(() -> {
+            if (uuidCache.add(uuid)) {
+                pendingUuidWrite.set(true);
             }
-        }
+            if (name != null) {
+                final String sanitizedName = getSanitizedName(name);
+                final UUID replacedUuid = nameToUuidMap.put(sanitizedName, uuid);
+                if (!uuid.equals(replacedUuid)) {
+                    if (ess.getSettings().isDebug()) {
+                        ess.getLogger().log(Level.WARNING, "Replaced UUID during cache update for " + sanitizedName + ": " + replacedUuid + " -> " + uuid);
+                    }
+                    pendingNameWrite.set(true);
+                }
+            }
+        });
     }
 
     protected void removeCache(final UUID uuid) {
-        if (uuid == null) {
-            return;
-        }
-
-        if (uuidCache.remove(uuid)) {
-            pendingUuidWrite.set(true);
-        }
-
-        final Set<String> toRemove = new HashSet<>();
-        for (final Map.Entry<String, UUID> entry : nameToUuidMap.entrySet()) {
-            if (uuid.equals(entry.getValue())) {
-                toRemove.add(entry.getKey());
+        TaskUtil.EXECUTOR.execute(() -> {
+            if (uuid == null) {
+                return;
             }
-        }
 
-        for (final String name : toRemove) {
-            nameToUuidMap.remove(name);
-        }
+            if (uuidCache.remove(uuid)) {
+                pendingUuidWrite.set(true);
+            }
 
-        if (!toRemove.isEmpty()) {
-            pendingNameWrite.set(true);
-        }
+            final Set<String> toRemove = new HashSet<>();
+            for (final Map.Entry<String, UUID> entry : nameToUuidMap.entrySet()) {
+                if (uuid.equals(entry.getValue())) {
+                    toRemove.add(entry.getKey());
+                }
+            }
+
+            for (final String name : toRemove) {
+                nameToUuidMap.remove(name);
+            }
+
+            if (!toRemove.isEmpty()) {
+                pendingNameWrite.set(true);
+            }
+        });
     }
 
     private void loadCache() {

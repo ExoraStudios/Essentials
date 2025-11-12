@@ -23,8 +23,13 @@ public class HelpopMessageSendEvent extends Event {
         this.message = message;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the sender of the helpop message.
+     *
      * @return the sender.
      */
     public IMessageRecipient getSender() {
@@ -33,6 +38,7 @@ public class HelpopMessageSendEvent extends Event {
 
     /**
      * Gets the recipients of the helpop message.
+     *
      * @return the recipients.
      */
     public List<IUser> getRecipients() {
@@ -41,6 +47,7 @@ public class HelpopMessageSendEvent extends Event {
 
     /**
      * Gets the helpop message to be sent.
+     *
      * @return the message.
      */
     public String getMessage() {
@@ -49,10 +56,6 @@ public class HelpopMessageSendEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-    
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

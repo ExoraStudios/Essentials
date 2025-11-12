@@ -5,13 +5,7 @@ import com.earth2me.essentials.config.ConfigurateUtil;
 import com.earth2me.essentials.config.EssentialsConfiguration;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class UserManager implements IConf {
     private static final String ADDRESS = "address";

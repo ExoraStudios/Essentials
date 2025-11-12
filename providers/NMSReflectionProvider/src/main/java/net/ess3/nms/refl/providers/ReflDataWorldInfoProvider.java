@@ -7,6 +7,12 @@ import org.bukkit.World;
 
 @ProviderData(description = "Reflection World Info Provider", weight = 1)
 public class ReflDataWorldInfoProvider implements WorldInfoProvider {
+    @ProviderTest
+    public static boolean test() {
+        // TODO: THIS IS INCORRECT
+        return false;
+    }
+
     @Override
     public int getMaxHeight(World world) {
         // Method has existed since Beta 1.7 (yes, *beta*)
@@ -25,11 +31,5 @@ public class ReflDataWorldInfoProvider implements WorldInfoProvider {
         // TODO: THIS IS INCORRECT
         // Worlds could not go below 0 until Minecraft 1.16
         return 0;
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        // TODO: THIS IS INCORRECT
-        return false;
     }
 }

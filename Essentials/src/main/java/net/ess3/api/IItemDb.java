@@ -67,7 +67,7 @@ public interface IItemDb extends com.earth2me.essentials.api.IItemDb {
 
     /**
      * Create a stack from the given name with the maximum stack size for that material.
-     *
+     * <p>
      * Note: it is unlikely that external plugins will need to call this method directly. In most cases, {@link IItemDb#get(String)}
      * and {@link IItemDb#get(String, int)} should be sufficient. However, if you intend to perform an item lookup <i>inside</i>
      * a {@link ItemResolver} implementation, you <b>must</b> call this method with useResolvers as false to prevent recursion.

@@ -11,6 +11,16 @@ import org.bukkit.inventory.InventoryView;
 @ProviderData(description = "Paper Container Provider")
 public class PaperContainerProvider implements ContainerProvider {
 
+    @ProviderTest
+    public static boolean test() {
+        try {
+            HumanEntity.class.getDeclaredMethod("openCartographyTable", Location.class, boolean.class);
+            return true;
+        } catch (final NoSuchMethodException ignored) {
+            return false;
+        }
+    }
+
     @Override
     public InventoryView openAnvil(Player player) {
         return player.openAnvil(null, true);
@@ -39,15 +49,5 @@ public class PaperContainerProvider implements ContainerProvider {
     @Override
     public InventoryView openStonecutter(Player player) {
         return player.openStonecutter(null, true);
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            HumanEntity.class.getDeclaredMethod("openCartographyTable", Location.class, boolean.class);
-            return true;
-        } catch (final NoSuchMethodException ignored) {
-            return false;
-        }
     }
 }

@@ -77,6 +77,7 @@ public interface BalanceTop {
 
         /**
          * Gets the UUID of the user.
+         *
          * @return The uuid of this user.
          */
         public UUID getUuid() {
@@ -85,6 +86,7 @@ public interface BalanceTop {
 
         /**
          * Gets the display name of the user at the time of cache population.
+         *
          * @return The display name of this user.
          */
         public String getDisplayName() {
@@ -93,6 +95,7 @@ public interface BalanceTop {
 
         /**
          * Gets the balance of the user at the time of cache population.
+         *
          * @return The balance of this user.
          */
         public BigDecimal getBalance() {

@@ -12,13 +12,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class Commandclearinventory extends EssentialsCommand {
     private static final int EXTENDED_CAP = 8;
@@ -30,7 +24,7 @@ public class Commandclearinventory extends EssentialsCommand {
     @Override
     public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception {
         parseCommand(server, user.getSource(), commandLabel, args, user.isAuthorized("essentials.clearinventory.others"),
-            user.isAuthorized("essentials.clearinventory.all") || user.isAuthorized("essentials.clearinventory.multiple"));
+                user.isAuthorized("essentials.clearinventory.all") || user.isAuthorized("essentials.clearinventory.multiple"));
     }
 
     @Override
@@ -39,7 +33,7 @@ public class Commandclearinventory extends EssentialsCommand {
     }
 
     private void parseCommand(final Server server, final CommandSource sender, final String commandLabel, final String[] args, final boolean allowOthers, final boolean allowAll)
-        throws Exception {
+            throws Exception {
         Collection<Player> players = new ArrayList<>();
         final User senderUser = ess.getUser(sender.getPlayer());
         String previousClearCommand = "";

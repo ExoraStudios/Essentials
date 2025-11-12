@@ -42,9 +42,9 @@ public class InteractionEventImpl implements InteractionEvent {
         String reply = Joiner.on('\n').join(replyBuffer);
         reply = reply.substring(0, Math.min(Message.MAX_CONTENT_LENGTH, reply.length()));
         event.getHook().editOriginal(
-                new MessageEditBuilder()
-                        .setContent(reply)
-                        .setAllowedMentions(DiscordUtil.NO_GROUP_MENTIONS).build())
+                        new MessageEditBuilder()
+                                .setContent(reply)
+                                .setAllowedMentions(DiscordUtil.NO_GROUP_MENTIONS).build())
                 .queue(null, error -> logger.log(Level.SEVERE, "Error while editing command interaction response", error));
     }
 

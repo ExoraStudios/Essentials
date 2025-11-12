@@ -14,7 +14,7 @@ public class TPARequestEvent extends Event implements Cancellable {
     private final CommandSource requester;
     private final IUser target;
     private boolean cancelled = false;
-    private boolean requestToTPAHere;
+    private final boolean requestToTPAHere;
 
     public TPARequestEvent(final CommandSource requester, final IUser target, final boolean tpaHere) {
         super();

@@ -64,7 +64,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect {
             pm.registerEvents(blockListener_1_16_r1, this);
         }
 
-        if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_21_3_R01)){
+        if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_21_3_R01)) {
             final EssentialsProtectEntityListener_1_21_3_R1 entityListener_1_21_3_r1 = new EssentialsProtectEntityListener_1_21_3_R1(this);
             pm.registerEvents(entityListener_1_21_3_r1, this);
         }

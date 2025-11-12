@@ -25,8 +25,13 @@ public class DiscordLinkStatusChangeEvent extends Event {
         this.cause = cause;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the Essentials {@link IUser user} whose link status has been changed in this event.
+     *
      * @return the user.
      */
     public IUser getUser() {
@@ -37,9 +42,10 @@ public class DiscordLinkStatusChangeEvent extends Event {
      * Gets the Discord {@link InteractionMember member} whose link status has been changed in this event.
      * <p>
      * This will return {@code null} if {@link #getCause()} returns {@link Cause#UNSYNC_LEAVE}.
+     *
+     * @return the member or null.
      * @see #getCause()
      * @see #getMemberId()
-     * @return the member or null.
      */
     public InteractionMember getMember() {
         return member;
@@ -49,6 +55,7 @@ public class DiscordLinkStatusChangeEvent extends Event {
      * Gets the ID of the Discord member whose link status has been changed in this event.
      * <p>
      * Unlink {@link #getMember()}, this method will never return null.
+     *
      * @return the member's id.
      */
     public String getMemberId() {
@@ -57,6 +64,7 @@ public class DiscordLinkStatusChangeEvent extends Event {
 
     /**
      * Gets the new link status of this {@link #getUser() user} after this event.
+     *
      * @return true if the user is linked to a discord account.
      */
     public boolean isLinked() {
@@ -65,8 +73,9 @@ public class DiscordLinkStatusChangeEvent extends Event {
 
     /**
      * The cause which triggered this event.
-     * @see Cause
+     *
      * @return the cause.
+     * @see Cause
      */
     public Cause getCause() {
         return cause;
@@ -74,10 +83,6 @@ public class DiscordLinkStatusChangeEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 

@@ -68,6 +68,17 @@ public class DiscordLinkSettings implements IConf {
         return config.getStringMap("role-sync.roles");
     }
 
+    @Override
+    public void reloadConfig() {
+        config.load();
+
+        linkPolicy = LinkPolicy.fromName(config.getString("link-policy", "none"));
+        roleSyncGroups = _getRoleSyncGroups();
+        roleSyncRoles = _getRoleSyncRoles();
+
+        plugin.onReload();
+    }
+
     public enum LinkPolicy {
         KICK,
         FREEZE,
@@ -81,16 +92,5 @@ public class DiscordLinkSettings implements IConf {
             }
             return LinkPolicy.NONE;
         }
-    }
-
-    @Override
-    public void reloadConfig() {
-        config.load();
-
-        linkPolicy = LinkPolicy.fromName(config.getString("link-policy", "none"));
-        roleSyncGroups = _getRoleSyncGroups();
-        roleSyncRoles = _getRoleSyncRoles();
-
-        plugin.onReload();
     }
 }

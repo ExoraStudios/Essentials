@@ -17,11 +17,7 @@ import org.bukkit.command.BlockCommandSender;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import static com.earth2me.essentials.I18n.tlLiteral;

@@ -19,6 +19,10 @@ public class MuteStatusChangeEvent extends StatusChangeEvent {
         this.reason = reason == null ? null : reason.isEmpty() ? null : reason;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * @return If the mute is temporary, returns a present optional with the timestamp; if permanent or unknown, returns an empty optional.
      */
@@ -35,10 +39,6 @@ public class MuteStatusChangeEvent extends StatusChangeEvent {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

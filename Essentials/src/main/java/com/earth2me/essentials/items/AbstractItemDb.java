@@ -19,27 +19,12 @@ import org.bukkit.block.Banner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.FireworkEffectMeta;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.inventory.meta.ArmorMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 public abstract class AbstractItemDb implements IConf, net.ess3.api.IItemDb {
@@ -56,7 +41,7 @@ public abstract class AbstractItemDb implements IConf, net.ess3.api.IItemDb {
     public void registerResolver(final Plugin plugin, final String name, final ItemResolver resolver) throws Exception {
         final PluginKey key = PluginKey.fromKey(plugin, name);
         if (resolverMap.containsKey(key)) {
-            throw new Exception("Tried to add a duplicate resolver with name " + key.toString());
+            throw new Exception("Tried to add a duplicate resolver with name " + key);
         }
 
         resolverMap.put(key, resolver);
@@ -66,7 +51,7 @@ public abstract class AbstractItemDb implements IConf, net.ess3.api.IItemDb {
     public void unregisterResolver(final Plugin plugin, final String name) throws Exception {
         final PluginKey key = PluginKey.fromKey(plugin, name);
         if (!resolverMap.containsKey(key)) {
-            throw new Exception("Tried to remove nonexistent resolver with name " + key.toString());
+            throw new Exception("Tried to remove nonexistent resolver with name " + key);
         }
 
         resolverMap.remove(key);
@@ -327,8 +312,8 @@ public abstract class AbstractItemDb implements IConf, net.ess3.api.IItemDb {
                     }
                     if (baseDyeColor != null) {
                         final int basecolor = baseDyeColor
-                            .getColor()
-                            .asRGB();
+                                .getColor()
+                                .asRGB();
                         sb.append("basecolor:").append(basecolor).append(" ");
                     }
                     for (final org.bukkit.block.banner.Pattern p : bannerMeta.getPatterns()) {

@@ -14,7 +14,7 @@ public class UserRandomTeleportEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
     private final IUser user;
-    private String name;
+    private final String name;
     private Location center;
     private double minRange;
     private double maxRange;

@@ -17,24 +17,35 @@ import java.util.Map;
 @ProviderData(description = "1.9-1.20.4 Potion Meta Provider", weight = 1)
 public class LegacyPotionMetaProvider implements PotionMetaProvider {
     private final Map<Integer, PotionType> damageValueToType = ImmutableMap.<Integer, PotionType>builder()
-        .put(1, PotionType.REGEN)
-        .put(2, PotionType.SPEED)
-        .put(3, PotionType.FIRE_RESISTANCE)
-        .put(4, PotionType.POISON)
-        .put(5, PotionType.INSTANT_HEAL)
-        .put(6, PotionType.NIGHT_VISION)
-        // Skip 7
-        .put(8, PotionType.WEAKNESS)
-        .put(9, PotionType.STRENGTH)
-        .put(10, PotionType.SLOWNESS)
-        .put(11, PotionType.JUMP)
-        .put(12, PotionType.INSTANT_DAMAGE)
-        .put(13, PotionType.WATER_BREATHING)
-        .put(14, PotionType.INVISIBILITY)
-        .build();
+            .put(1, PotionType.REGEN)
+            .put(2, PotionType.SPEED)
+            .put(3, PotionType.FIRE_RESISTANCE)
+            .put(4, PotionType.POISON)
+            .put(5, PotionType.INSTANT_HEAL)
+            .put(6, PotionType.NIGHT_VISION)
+            // Skip 7
+            .put(8, PotionType.WEAKNESS)
+            .put(9, PotionType.STRENGTH)
+            .put(10, PotionType.SLOWNESS)
+            .put(11, PotionType.JUMP)
+            .put(12, PotionType.INSTANT_DAMAGE)
+            .put(13, PotionType.WATER_BREATHING)
+            .put(14, PotionType.INVISIBILITY)
+            .build();
 
     private static int getBit(final int n, final int k) {
         return (n >> k) & 1;
+    }
+
+    @ProviderTest
+    public static boolean test() {
+        try {
+            // This provider was created to support the new PotionData API introduced in 1.9
+            Class.forName("org.bukkit.potion.PotionData");
+            return true;
+        } catch (final Throwable ignored) {
+            return false;
+        }
     }
 
     @Override
@@ -46,9 +57,9 @@ public class LegacyPotionMetaProvider implements PotionMetaProvider {
         }
 
         final int damageValue = getBit(effectId, 0) +
-            2 * getBit(effectId, 1) +
-            4 * getBit(effectId, 2) +
-            8 * getBit(effectId, 3);
+                2 * getBit(effectId, 1) +
+                4 * getBit(effectId, 2) +
+                8 * getBit(effectId, 3);
 
         final PotionType type = damageValueToType.get(damageValue);
         if (type == null) {
@@ -128,16 +139,5 @@ public class LegacyPotionMetaProvider implements PotionMetaProvider {
         final PotionMeta meta = (PotionMeta) stack.getItemMeta();
         meta.setBasePotionData(data);
         stack.setItemMeta(meta);
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            // This provider was created to support the new PotionData API introduced in 1.9
-            Class.forName("org.bukkit.potion.PotionData");
-            return true;
-        } catch (final Throwable ignored) {
-            return false;
-        }
     }
 }

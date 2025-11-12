@@ -16,11 +16,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -449,7 +445,7 @@ public class DiscordSettings implements IConf {
                 "starttimeseconds");
         return MessageUtil.formatMessage(format,
                 // measures time since the JVM started and converts it to seconds
-                String.format("%.2f", (float)Math.abs(ManagementFactory.getRuntimeMXBean().getStartTime() - System.currentTimeMillis()) / 1000)
+                String.format("%.2f", (float) Math.abs(ManagementFactory.getRuntimeMXBean().getStartTime() - System.currentTimeMillis()) / 1000)
         );
     }
 

@@ -25,6 +25,10 @@ public class UserTeleportSpawnEvent extends Event implements Cancellable {
         this.target = target;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * @return The user who is being teleported to spawn.
      */
@@ -41,6 +45,7 @@ public class UserTeleportSpawnEvent extends Event implements Cancellable {
 
     /**
      * The {@link #getUser() user's} group used to determine their spawn location.
+     *
      * @return The user's group.
      */
     public String getSpawnGroup() {
@@ -49,6 +54,7 @@ public class UserTeleportSpawnEvent extends Event implements Cancellable {
 
     /**
      * The spawn location of the {@link #getUser() user's} {@link #getSpawnGroup() group}.
+     *
      * @return The spawn location of the user's group.
      */
     public Location getSpawnLocation() {
@@ -67,10 +73,6 @@ public class UserTeleportSpawnEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

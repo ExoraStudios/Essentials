@@ -20,12 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 
 import static com.earth2me.essentials.I18n.tlLiteral;
@@ -151,7 +146,7 @@ public class Kit {
             throw new Exception("Invalid item list");
         } catch (final Exception e) {
             ess.getLogger().log(Level.WARNING, "Error parsing kit " + kitName + ": " + e.getMessage());
-            throw new TranslatableException(e,"kitError2");
+            throw new TranslatableException(e, "kitError2");
         }
     }
 

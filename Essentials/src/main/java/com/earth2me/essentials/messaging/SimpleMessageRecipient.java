@@ -11,8 +11,6 @@ import org.bukkit.entity.Player;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 
-import static com.earth2me.essentials.I18n.tlLiteral;
-
 /**
  * Represents a simple reusable implementation of {@link IMessageRecipient}. This class provides functionality for the following methods:
  * <ul>
@@ -114,6 +112,7 @@ public class SimpleMessageRecipient implements IMessageRecipient {
                 sendTl("msgFormat", AdventureUtil.parsed(tlSender("meSender")), recipient.getDisplayName(), message);
 
                 // Better Social Spy
+                /*
                 if (ess.getSettings().isSocialSpyMessages()) {
                     final User senderUser = getUser(this);
                     final User recipientUser = getUser(recipient);
@@ -137,6 +136,7 @@ public class SimpleMessageRecipient implements IMessageRecipient {
                         }
                     }
                 }
+                 */
                 break;
         }
         // If the message was a success, set this sender's reply-recipient to the current recipient.

@@ -7,29 +7,17 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Ageable;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityCombustByEntityEvent;
-import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public class EssentialsEntityListener implements Listener {
@@ -82,19 +70,24 @@ public class EssentialsEntityListener implements Listener {
             event.setCancelled(true);
         }
 
+        /*
         if (attacker.isGodModeEnabled() && !attacker.isAuthorized("essentials.god.pvp")) {
             event.setCancelled(true);
         }
+         */
 
         if (attacker.isHidden() && !attacker.isAuthorized("essentials.vanish.pvp")) {
             event.setCancelled(true);
         }
 
+        /*
         if (attacker.arePowerToolsEnabled()) {
             onPlayerVsPlayerPowertool(event, defender, attacker);
         }
+         */
     }
 
+    /*
     private void onPlayerVsPlayerPowertool(final EntityDamageByEntityEvent event, final Player defender, final User attacker) {
         final List<String> commandList = attacker.getPowertool(Inventories.getItemInHand(attacker.getBase()));
         if (commandList != null && !commandList.isEmpty()) {
@@ -117,7 +110,6 @@ public class EssentialsEntityListener implements Listener {
                 }
             }
         }
-    }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDamage(final EntityDamageEvent event) {
@@ -154,7 +146,7 @@ public class EssentialsEntityListener implements Listener {
                 }
             }
         }
-    }
+     */
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerDeathEvent(final PlayerDeathEvent event) {
@@ -223,6 +215,7 @@ public class EssentialsEntityListener implements Listener {
         }
     }
 
+    /*
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onFoodLevelChange(final FoodLevelChangeEvent event) {
         if (event.getEntity() instanceof Player) {
@@ -235,14 +228,13 @@ public class EssentialsEntityListener implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityRegainHealth(final EntityRegainHealthEvent event) {
         if (event.getRegainReason() == RegainReason.SATIATED && event.getEntity() instanceof Player && ess.getUser((Player) event.getEntity()).isAfk() && ess.getSettings().getFreezeAfkPlayers()) {
             event.setCancelled(true);
         }
-    }
+
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPotionSplashEvent(final PotionSplashEvent event) {
@@ -252,6 +244,7 @@ public class EssentialsEntityListener implements Listener {
             }
         }
     }
+     */
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityShootBow(final EntityShootBowEvent event) {
@@ -263,6 +256,7 @@ public class EssentialsEntityListener implements Listener {
         }
     }
 
+    /*
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityTarget(final EntityTargetEvent event) {
         if (event.getTarget() instanceof Player) {
@@ -272,4 +266,5 @@ public class EssentialsEntityListener implements Listener {
             }
         }
     }
+     */
 }

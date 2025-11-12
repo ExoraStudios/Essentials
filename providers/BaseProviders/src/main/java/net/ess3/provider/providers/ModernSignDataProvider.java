@@ -16,6 +16,16 @@ public class ModernSignDataProvider implements SignDataProvider {
         this.plugin = plugin;
     }
 
+    @ProviderTest
+    public static boolean test() {
+        try {
+            Class.forName("org.bukkit.block.TileState");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
     @Override
     public void setSignData(Sign sign, String key, String value) {
         if (sign == null || key == null || value == null) {
@@ -36,16 +46,6 @@ public class ModernSignDataProvider implements SignDataProvider {
             return sign.getPersistentDataContainer().get(new NamespacedKey(plugin, key), PersistentDataType.STRING);
         } catch (IllegalArgumentException ignored) {
             return null;
-        }
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            Class.forName("org.bukkit.block.TileState");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
         }
     }
 }

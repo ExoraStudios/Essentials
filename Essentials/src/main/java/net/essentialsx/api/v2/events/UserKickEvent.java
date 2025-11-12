@@ -22,6 +22,10 @@ public class UserKickEvent extends Event implements Cancellable {
         this.reason = reason;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public IUser getKicked() {
         return kicked;
     }
@@ -50,10 +54,6 @@ public class UserKickEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

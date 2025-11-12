@@ -6,26 +6,7 @@ import com.earth2me.essentials.utils.VersionUtil;
 import net.ess3.nms.refl.ReflUtil;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
-import org.bukkit.entity.Axolotl;
-import org.bukkit.entity.Boat;
-import org.bukkit.entity.Camel;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fox;
-import org.bukkit.entity.Frog;
-import org.bukkit.entity.Llama;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Ocelot;
-import org.bukkit.entity.Panda;
-import org.bukkit.entity.Parrot;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Salmon;
-import org.bukkit.entity.TropicalFish;
-import org.bukkit.entity.Villager;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.invoke.MethodHandle;
@@ -39,21 +20,6 @@ public final class MobCompat {
 
     // Constants for mob interfaces added in later versions
     public static final Class<?> RAIDER = ReflUtil.getClassCached("org.bukkit.entity.Raider");
-
-    // Stupid hacks to avoid Commodore rewrites.
-    private static final Class<?> COW = ReflUtil.getClassCached("org.bukkit.entity.Cow");
-    private static final Class<?> COW_VARIANT = ReflUtil.getClassCached("org.bukkit.entity.Cow$Variant");
-    private static final MethodHandle COW_VARIANT_HANDLE;
-
-    static {
-        MethodHandle handle = null;
-        try {
-            handle = MethodHandles.lookup().findVirtual(COW, "setVariant", MethodType.methodType(void.class, COW_VARIANT));
-        } catch (final Throwable ignored) {
-        }
-        COW_VARIANT_HANDLE = handle;
-    }
-
     // Constants for mobs added in later versions
     public static final EntityType LLAMA = getEntityType("LLAMA");
     public static final EntityType PARROT = getEntityType("PARROT");
@@ -69,7 +35,6 @@ public final class MobCompat {
     public static final EntityType FROG = getEntityType("FROG");
     public static final EntityType CAMEL = getEntityType("CAMEL");
     public static final EntityType SALMON = getEntityType("SALMON");
-
     // Constants for mobs that have changed since earlier versions
     public static final EntityType CAT = getEntityType("CAT", "OCELOT");
     public static final EntityType ZOMBIFIED_PIGLIN = getEntityType("ZOMBIFIED_PIGLIN", "PIG_ZOMBIE");
@@ -83,6 +48,19 @@ public final class MobCompat {
     public static final EntityType END_CRYSTAL = getEntityType("END_CRYSTAL", "ENDER_CRYSTAL");
     public static final EntityType FIREWORK_ROCKET = getEntityType("FIREWORK_ROCKET", "FIREWORK");
     public static final EntityType OAK_BOAT = getEntityType("BOAT", "OAK_BOAT");
+    // Stupid hacks to avoid Commodore rewrites.
+    private static final Class<?> COW = ReflUtil.getClassCached("org.bukkit.entity.Cow");
+    private static final Class<?> COW_VARIANT = ReflUtil.getClassCached("org.bukkit.entity.Cow$Variant");
+    private static final MethodHandle COW_VARIANT_HANDLE;
+
+    static {
+        MethodHandle handle = null;
+        try {
+            handle = MethodHandles.lookup().findVirtual(COW, "setVariant", MethodType.methodType(void.class, COW_VARIANT));
+        } catch (final Throwable ignored) {
+        }
+        COW_VARIANT_HANDLE = handle;
+    }
 
     private MobCompat() {
     }

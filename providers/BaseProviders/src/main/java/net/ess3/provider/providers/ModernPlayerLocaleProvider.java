@@ -7,11 +7,6 @@ import org.bukkit.entity.Player;
 
 @ProviderData(description = "1.12.2+ Player Locale Provider", weight = 1)
 public class ModernPlayerLocaleProvider implements PlayerLocaleProvider {
-    @Override
-    public String getLocale(Player player) {
-        return player.getLocale();
-    }
-
     @ProviderTest
     public static boolean test() {
         try {
@@ -20,5 +15,10 @@ public class ModernPlayerLocaleProvider implements PlayerLocaleProvider {
         } catch (final NoSuchMethodException ignored) {
             return false;
         }
+    }
+
+    @Override
+    public String getLocale(Player player) {
+        return player.getLocale();
     }
 }

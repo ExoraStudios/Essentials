@@ -24,8 +24,13 @@ public class TeleportRequestResponseEvent extends Event implements Cancellable {
         this.accept = accept;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the user who is accepting/denying this teleport request.
+     *
      * @return the user accepting/denying the request.
      */
     public net.ess3.api.IUser getRequestee() {
@@ -34,6 +39,7 @@ public class TeleportRequestResponseEvent extends Event implements Cancellable {
 
     /**
      * Gets the user who submitted this teleport request.
+     *
      * @return the user who sent the request.
      */
     public net.ess3.api.IUser getRequester() {
@@ -42,6 +48,7 @@ public class TeleportRequestResponseEvent extends Event implements Cancellable {
 
     /**
      * Gets information about this teleport request.
+     *
      * @return the {@link com.earth2me.essentials.IUser.TpaRequest} object of this event.
      */
     public IUser.TpaRequest getTpaRequest() {
@@ -50,6 +57,7 @@ public class TeleportRequestResponseEvent extends Event implements Cancellable {
 
     /**
      * Whether or not the request has been accepted.
+     *
      * @return true if accepted, false if denied.
      */
     public boolean isAccept() {
@@ -58,6 +66,7 @@ public class TeleportRequestResponseEvent extends Event implements Cancellable {
 
     /**
      * Whether or not the request has been denied.
+     *
      * @return true if denied, false if accepted.
      */
     public boolean isDeny() {
@@ -72,6 +81,7 @@ public class TeleportRequestResponseEvent extends Event implements Cancellable {
     /**
      * Sets whether or not to cancel this teleport request.
      * Note that cancelling this event will not show a message to users about the cancellation.
+     *
      * @param cancel whether or not to cancel this teleport request.
      */
     @Override
@@ -81,10 +91,6 @@ public class TeleportRequestResponseEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

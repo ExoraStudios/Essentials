@@ -19,7 +19,8 @@ public class PaperCommandSender extends BukkitSenderProvider {
     static {
         boolean jmpHappy;
         try {
-            Bukkit.createCommandSender(component -> {});
+            Bukkit.createCommandSender(component -> {
+            });
             jmpHappy = true;
         } catch (NoSuchMethodError ignored) {
             jmpHappy = false;

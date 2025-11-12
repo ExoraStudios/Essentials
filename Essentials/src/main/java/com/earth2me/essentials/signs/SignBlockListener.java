@@ -13,13 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockBurnEvent;
-import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.block.*;
 
 import java.util.logging.Level;
 
@@ -107,7 +101,7 @@ public class SignBlockListener implements Listener {
                 // If this sign is not enabled and it has been requested to not protect it's name (when disabled), then do not protect the name.
                 // By lower-casing it and stripping colours. 
                 if (!ess.getSettings().enabledSigns().contains(sign)
-                    && ess.getSettings().getUnprotectedSignNames().contains(sign)) {
+                        && ess.getSettings().getUnprotectedSignNames().contains(sign)) {
                     continue;
                 }
                 event.setLine(0, lColorlessTopLine);
@@ -228,7 +222,7 @@ public class SignBlockListener implements Listener {
 
         if (event.isSticky()) {
             final Block pistonBaseBlock = event.getBlock();
-            final Block[] affectedBlocks = new Block[] {pistonBaseBlock, pistonBaseBlock.getRelative(event.getDirection()), event.getRetractLocation().getBlock()};
+            final Block[] affectedBlocks = new Block[]{pistonBaseBlock, pistonBaseBlock.getRelative(event.getDirection()), event.getRetractLocation().getBlock()};
 
             for (final Block block : affectedBlocks) {
                 if ((MaterialUtil.isSign(block.getType()) && EssentialsSign.isValidSign(ess, new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block)) {

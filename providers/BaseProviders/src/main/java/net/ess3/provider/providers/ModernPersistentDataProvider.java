@@ -18,6 +18,16 @@ public class ModernPersistentDataProvider implements PersistentDataProvider {
         this.plugin = plugin;
     }
 
+    @ProviderTest
+    public static boolean test() {
+        try {
+            Class.forName("org.bukkit.persistence.PersistentDataHolder");
+            return true;
+        } catch (final ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+
     @Override
     public void set(ItemStack itemStack, String key, String value) {
         if (itemStack == null || itemStack.getItemMeta() == null || key == null || value == null) {
@@ -45,15 +55,5 @@ public class ModernPersistentDataProvider implements PersistentDataProvider {
     @Override
     public void remove(ItemStack itemStack, String key) {
         itemStack.getItemMeta().getPersistentDataContainer().remove(new NamespacedKey(plugin, key));
-    }
-
-    @ProviderTest
-    public static boolean test() {
-        try {
-            Class.forName("org.bukkit.persistence.PersistentDataHolder");
-            return true;
-        } catch (final ClassNotFoundException ignored) {
-            return false;
-        }
     }
 }

@@ -52,7 +52,7 @@ public class Commandhelpop extends EssentialsCommand {
         ess.getServer().getPluginManager().callEvent(sendEvent);
 
         final IUser sender = (IUser) from;
-        if(!recipients.contains(sender)){
+        if (!recipients.contains(sender)) {
             from.sendTl("helpOp", from.getDisplayName(), message);
         }
 

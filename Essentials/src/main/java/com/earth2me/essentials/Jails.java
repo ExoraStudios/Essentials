@@ -19,21 +19,13 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.PluginManager;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
@@ -74,7 +66,7 @@ public class Jails implements net.ess3.api.IJails {
         enabled = true;
         final PluginManager pluginManager = ess.getServer().getPluginManager();
         final JailListener blockListener = new JailListener();
-        pluginManager.registerEvents(blockListener, ess);
+        // pluginManager.registerEvents(blockListener, ess);
         if (ess.getSettings().isDebug()) {
             ess.getLogger().log(Level.INFO, "Registering Jail listener");
         }

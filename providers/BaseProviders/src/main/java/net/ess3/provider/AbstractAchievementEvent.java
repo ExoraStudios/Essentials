@@ -15,6 +15,10 @@ public class AbstractAchievementEvent extends Event {
         this.name = name;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -25,10 +29,6 @@ public class AbstractAchievementEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

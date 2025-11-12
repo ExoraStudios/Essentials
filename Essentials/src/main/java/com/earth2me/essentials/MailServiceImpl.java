@@ -72,8 +72,8 @@ public class MailServiceImpl implements MailService {
     @Override
     public Object[] getMailTlArgs(MailMessage message) {
         if (message.isLegacy()) {
-            return new Object[] {message.getMessage()};
+            return new Object[]{message.getMessage()};
         }
-        return new Object[] {df.get().format(new Date(message.getTimeSent())), message.getSenderUsername(), message.getMessage()};
+        return new Object[]{df.get().format(new Date(message.getTimeSent())), message.getSenderUsername(), message.getMessage()};
     }
 }

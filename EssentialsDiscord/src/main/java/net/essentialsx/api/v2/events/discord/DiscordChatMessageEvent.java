@@ -29,8 +29,13 @@ public class DiscordChatMessageEvent extends Event implements Cancellable {
         this.chatType = chatType;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * The player which caused this chat message.
+     *
      * @return the player who caused the event.
      */
     public Player getPlayer() {
@@ -39,6 +44,7 @@ public class DiscordChatMessageEvent extends Event implements Cancellable {
 
     /**
      * The message being sent in this chat event.
+     *
      * @return the message of this event.
      */
     public String getMessage() {
@@ -47,6 +53,7 @@ public class DiscordChatMessageEvent extends Event implements Cancellable {
 
     /**
      * Sets the message of this event, and thus the chat message relayed to Discord.
+     *
      * @param message the new message.
      */
     public void setMessage(String message) {
@@ -55,6 +62,7 @@ public class DiscordChatMessageEvent extends Event implements Cancellable {
 
     /**
      * Type of chat of the original message.
+     *
      * @return type of chat of the original message.
      */
     public ChatType getChatType() {
@@ -74,10 +82,6 @@ public class DiscordChatMessageEvent extends Event implements Cancellable {
     @NotNull
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

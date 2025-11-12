@@ -2,23 +2,13 @@ package com.earth2me.essentials.perm;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.perm.impl.AbstractVaultHandler;
-import com.earth2me.essentials.perm.impl.ConfigPermissionsHandler;
-import com.earth2me.essentials.perm.impl.GenericVaultHandler;
-import com.earth2me.essentials.perm.impl.LuckPermsHandler;
-import com.earth2me.essentials.perm.impl.ModernVaultHandler;
-import com.earth2me.essentials.perm.impl.SuperpermsHandler;
+import com.earth2me.essentials.perm.impl.*;
 import com.earth2me.essentials.utils.TriState;
 import com.google.common.collect.ImmutableSet;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -162,10 +152,10 @@ public class PermissionsHandler implements IPermissionsHandler {
     public void checkPermissions() {
         // load and assign a handler
         final List<Class<? extends SuperpermsHandler>> providerClazz = Arrays.asList(
-            LuckPermsHandler.class,
-            ModernVaultHandler.class,
-            GenericVaultHandler.class,
-            SuperpermsHandler.class
+                LuckPermsHandler.class,
+                ModernVaultHandler.class,
+                GenericVaultHandler.class,
+                SuperpermsHandler.class
         );
         for (final Class<? extends IPermissionsHandler> providerClass : providerClazz) {
             try {
@@ -210,9 +200,9 @@ public class PermissionsHandler implements IPermissionsHandler {
         } else if (handler.getClass() == SuperpermsHandler.class) {
             if (handler.tryProvider(ess)) {
                 ess.getLogger().warning("Detected supported permissions plugin " +
-                    ((SuperpermsHandler) handler).getEnabledPermsPlugin() + " without Vault installed.");
+                        ((SuperpermsHandler) handler).getEnabledPermsPlugin() + " without Vault installed.");
                 ess.getLogger().warning("Features such as chat prefixes/suffixes and group-related functionality will not " +
-                    "work until you install Vault.");
+                        "work until you install Vault.");
             }
             ess.getLogger().info("Using superperms-based permissions.");
         }

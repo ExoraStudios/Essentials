@@ -23,10 +23,10 @@ import java.util.Set;
 @Deprecated // This sign will be removed soon
 public class SignProtection extends EssentialsSign {
     private final transient Set<Material> protectedBlocks = EnumUtil.getAllMatching(Material.class,
-        "CHEST",
-        "FURNACE",
-        "BURNING_FURNACE",
-        "DISPENSER");
+            "CHEST",
+            "FURNACE",
+            "BURNING_FURNACE",
+            "DISPENSER");
 
     public SignProtection() {
         super("Protection");
@@ -135,7 +135,7 @@ public class SignProtection extends EssentialsSign {
     }
 
     private Block[] getAdjacentBlocks(final Block block) {
-        return new Block[] {block.getRelative(BlockFace.NORTH), block.getRelative(BlockFace.SOUTH), block.getRelative(BlockFace.EAST), block.getRelative(BlockFace.WEST), block.getRelative(BlockFace.DOWN), block.getRelative(BlockFace.UP)};
+        return new Block[]{block.getRelative(BlockFace.NORTH), block.getRelative(BlockFace.SOUTH), block.getRelative(BlockFace.EAST), block.getRelative(BlockFace.WEST), block.getRelative(BlockFace.DOWN), block.getRelative(BlockFace.UP)};
     }
 
     public SignProtectionState isBlockProtected(final Block block, final User user, final String username, final boolean secure) {

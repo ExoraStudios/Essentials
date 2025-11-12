@@ -234,9 +234,10 @@ public abstract class AbstractChatHandler {
 
     /**
      * Re-create type-based chat event from the base chat event, call it and mirror changes back to the base chat event.
-     * @param event Event based on which a type-based event will be created, and to which changes will be applied.
+     *
+     * @param event    Event based on which a type-based event will be created, and to which changes will be applied.
      * @param chatType Chat type which determines which event will be created and called.
-     * @param radius If chat is a local chat, this is a non-squared radius used to calculate recipients, otherwise {@code null}.
+     * @param radius   If chat is a local chat, this is a non-squared radius used to calculate recipients, otherwise {@code null}.
      */
     protected void callChatEvent(final AbstractChatEvent event, final ChatType chatType, final Long radius) {
         final ChatEvent chatEvent;

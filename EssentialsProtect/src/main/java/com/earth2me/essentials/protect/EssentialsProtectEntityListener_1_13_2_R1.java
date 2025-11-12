@@ -1,10 +1,6 @@
 package com.earth2me.essentials.protect;
 
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

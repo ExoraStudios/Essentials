@@ -1,19 +1,14 @@
 package com.earth2me.essentials;
 
-import java.util.stream.Collectors;
 import net.ess3.provider.KnownCommandsProvider;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class AlternativeCommandsHandler {
     private final transient Map<String, List<WeakReference<Command>>> altCommands = new HashMap<>();

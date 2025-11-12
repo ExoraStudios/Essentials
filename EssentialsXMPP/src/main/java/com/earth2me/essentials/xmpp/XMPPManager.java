@@ -7,31 +7,15 @@ import com.earth2me.essentials.utils.AdventureUtil;
 import com.earth2me.essentials.utils.FormatUtil;
 import net.ess3.api.IUser;
 import org.bukkit.entity.Player;
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.ChatManagerListener;
-import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.Roster.SubscriptionMode;
-import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.*;
+import java.util.logging.*;
 
 import static com.earth2me.essentials.I18n.tlLiteral;
 

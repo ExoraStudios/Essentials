@@ -46,7 +46,7 @@ public class Commandmsg extends EssentialsLoopCommand {
             return;
         }
 
-        loopOnlinePlayers(server, sender, false, canWildcard, args[0], new String[] {message});
+        loopOnlinePlayers(server, sender, false, canWildcard, args[0], new String[]{message});
     }
 
     @Override

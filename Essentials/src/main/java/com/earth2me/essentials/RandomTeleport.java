@@ -14,14 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -207,12 +200,12 @@ public class RandomTeleport implements IConf {
             offsetZ = -rectX;
         }
         final Location location = new Location(
-            center.getWorld(),
-            center.getX() + offsetX,
-            worldInfoProvider.getMaxHeight(center.getWorld()),
-            center.getZ() + offsetZ,
-            360 * RANDOM.nextFloat() - 180,
-            0
+                center.getWorld(),
+                center.getX() + offsetX,
+                worldInfoProvider.getMaxHeight(center.getWorld()),
+                center.getZ() + offsetZ,
+                360 * RANDOM.nextFloat() - 180,
+                0
         );
         PaperLib.getChunkAtAsync(location).thenAccept(chunk -> {
             if (World.Environment.NETHER.equals(center.getWorld().getEnvironment())) {

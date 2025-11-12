@@ -11,18 +11,18 @@ import java.util.stream.Stream;
 
 public interface SpawnerItemProvider extends Provider {
     Map<EntityType, String> entityToDisplayName = Stream.of("CAVE_SPIDER:Cave Spider", "PIG_ZOMBIE:Zombie Pigman",
-        "ZOMBIFIED_PIGLIN:Zombie Piglin", "MAGMA_CUBE:Magma Cube", "ENDER_DRAGON:Ender Dragon",
-        "MUSHROOM_COW:Mooshroom", "SNOWMAN:Snow Golem", "OCELOT:Ocelot", "IRON_GOLEM:Iron Golem", "WITHER:Wither",
-        "HORSE:Horse")
-        .filter(s -> {
-            try {
-                EntityType.valueOf(s);
-                return true;
-            } catch (IllegalArgumentException e) {
-                return false;
-            }
-        })
-        .collect(Collectors.toMap(s -> EntityType.valueOf(s.split(":")[0]), s -> s.split(":")[1]));
+                    "ZOMBIFIED_PIGLIN:Zombie Piglin", "MAGMA_CUBE:Magma Cube", "ENDER_DRAGON:Ender Dragon",
+                    "MUSHROOM_COW:Mooshroom", "SNOWMAN:Snow Golem", "OCELOT:Ocelot", "IRON_GOLEM:Iron Golem", "WITHER:Wither",
+                    "HORSE:Horse")
+            .filter(s -> {
+                try {
+                    EntityType.valueOf(s);
+                    return true;
+                } catch (IllegalArgumentException e) {
+                    return false;
+                }
+            })
+            .collect(Collectors.toMap(s -> EntityType.valueOf(s.split(":")[0]), s -> s.split(":")[1]));
 
     ItemStack setEntityType(ItemStack is, EntityType type) throws IllegalArgumentException;
 

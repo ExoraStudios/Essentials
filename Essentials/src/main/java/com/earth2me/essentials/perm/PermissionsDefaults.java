@@ -10,24 +10,24 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 
 public final class PermissionsDefaults {
-    
+
     private PermissionsDefaults() {
     }
-    
+
     public static void registerAllBackDefaults() {
         for (final World world : Bukkit.getWorlds()) {
             registerBackDefaultFor(world);
         }
     }
-    
+
     public static void registerBackDefaultFor(final World w) {
         final String permName = "essentials.back.into." + w.getName();
 
         Permission p = Bukkit.getPluginManager().getPermission(permName);
         if (p == null) {
             p = new Permission(permName,
-                "Allows access to /back when the destination location is within world " + w.getName(),
-                PermissionDefault.TRUE);
+                    "Allows access to /back when the destination location is within world " + w.getName(),
+                    PermissionDefault.TRUE);
             Bukkit.getPluginManager().addPermission(p);
         }
     }

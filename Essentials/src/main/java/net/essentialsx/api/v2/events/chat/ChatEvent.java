@@ -21,7 +21,7 @@ public abstract class ChatEvent extends Event implements Cancellable {
     private boolean cancelled = false;
 
     public ChatEvent(final boolean async, final ChatType chatType, final Player player,
-        final String format, final String message, final Set<Player> recipients) {
+                     final String format, final String message, final Set<Player> recipients) {
         super(async);
 
         this.chatType = chatType;

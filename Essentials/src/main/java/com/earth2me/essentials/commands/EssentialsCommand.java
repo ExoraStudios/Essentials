@@ -1,10 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.CommandSource;
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.IEssentialsModule;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.*;
 import com.earth2me.essentials.utils.FormatUtil;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -19,13 +15,7 @@ import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.MissingResourceException;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,6 +53,17 @@ public abstract class EssentialsCommand implements IEssentialsCommand {
         }
     }
 
+    public static String getFinalArg(final String[] args, final int start) {
+        final StringBuilder bldr = new StringBuilder();
+        for (int i = start; i < args.length; i++) {
+            if (i != start) {
+                bldr.append(" ");
+            }
+            bldr.append(args[i]);
+        }
+        return bldr.toString();
+    }
+
     private void addUsageString(final String usage, final String description) {
         final StringBuffer buffer = new StringBuffer();
         final Matcher matcher = ARGUMENT_PATTERN.matcher(usage);
@@ -77,17 +78,6 @@ public abstract class EssentialsCommand implements IEssentialsCommand {
     @Override
     public Map<String, String> getUsageStrings() {
         return usageStrings;
-    }
-
-    public static String getFinalArg(final String[] args, final int start) {
-        final StringBuilder bldr = new StringBuilder();
-        for (int i = start; i < args.length; i++) {
-            if (i != start) {
-                bldr.append(" ");
-            }
-            bldr.append(args[i]);
-        }
-        return bldr.toString();
     }
 
     private boolean canInteractWith(final User interactor, final User interactee) {
@@ -320,7 +310,7 @@ public abstract class EssentialsCommand implements IEssentialsCommand {
         String[] effectiveArgs = new String[numArgs];
         System.arraycopy(args, index, effectiveArgs, 0, numArgs);
         if (effectiveArgs.length == 0) {
-            effectiveArgs = new String[] {""};
+            effectiveArgs = new String[]{""};
         }
         if (ess.getSettings().isDebug()) {
             ess.getLogger().info(command + " -- " + Arrays.toString(effectiveArgs));

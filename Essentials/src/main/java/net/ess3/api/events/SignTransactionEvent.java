@@ -3,9 +3,9 @@ package net.ess3.api.events;
 import com.earth2me.essentials.signs.EssentialsSign;
 import net.ess3.api.IUser;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.bukkit.event.HandlerList;
 
 import java.math.BigDecimal;
 
@@ -26,6 +26,10 @@ public final class SignTransactionEvent extends SignInteractEvent implements Can
         this.transactionValue = transactionValue;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     @Override
     public boolean isCancelled() {
         return this.isCancelled;
@@ -38,6 +42,7 @@ public final class SignTransactionEvent extends SignInteractEvent implements Can
 
     /**
      * Gets the ItemStack that is about to be bought or sold in this transition.
+     *
      * @return The ItemStack being bought or sold.
      */
     public @NotNull ItemStack getItemStack() {
@@ -46,6 +51,7 @@ public final class SignTransactionEvent extends SignInteractEvent implements Can
 
     /**
      * Gets the type of transaction, either buy or sell.
+     *
      * @return The transaction type.
      */
     public @NotNull TransactionType getTransactionType() {
@@ -54,18 +60,11 @@ public final class SignTransactionEvent extends SignInteractEvent implements Can
 
     /**
      * Gets the value of the item being bought or sold.
+     *
      * @return The item's value.
      */
     public BigDecimal getTransactionValue() {
         return transactionValue;
-    }
-
-    /**
-    * The type of transaction for this sign transaction.
-    */
-    public enum TransactionType {
-        BUY,
-        SELL
     }
 
     @Override
@@ -73,7 +72,11 @@ public final class SignTransactionEvent extends SignInteractEvent implements Can
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
+    /**
+     * The type of transaction for this sign transaction.
+     */
+    public enum TransactionType {
+        BUY,
+        SELL
     }
 }

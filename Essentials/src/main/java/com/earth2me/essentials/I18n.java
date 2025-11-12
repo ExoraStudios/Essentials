@@ -4,27 +4,13 @@ import com.earth2me.essentials.utils.AdventureUtil;
 import net.ess3.api.IEssentials;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,11 +36,11 @@ public class I18n implements net.ess3.api.II18n {
     private final transient Locale defaultLocale = Locale.getDefault();
     private final transient ResourceBundle defaultBundle;
     private final transient IEssentials ess;
-    private transient Locale currentLocale = defaultLocale;
     private final transient Map<Locale, ResourceBundle> loadedBundles = new ConcurrentHashMap<>();
     private final transient List<Locale> loadingBundles = new ArrayList<>();
-    private transient ResourceBundle localeBundle;
     private final transient Map<Locale, Map<String, MessageFormat>> messageFormatCache = new HashMap<>();
+    private transient Locale currentLocale = defaultLocale;
+    private transient ResourceBundle localeBundle;
 
     public I18n(final IEssentials ess) {
         this.ess = ess;
@@ -64,7 +50,8 @@ public class I18n implements net.ess3.api.II18n {
 
     /**
      * Translates a message using the server's configured locale.
-     * @param tlKey The translation key.
+     *
+     * @param tlKey   The translation key.
      * @param objects Translation parameters, if applicable. Note: by default, these will not be parsed for MiniMessage.
      * @return The translated message.
      * @see AdventureUtil#parsed(String)
@@ -79,8 +66,9 @@ public class I18n implements net.ess3.api.II18n {
 
     /**
      * Translates a message using the provided locale.
-     * @param locale The locale to translate the key to.
-     * @param tlKey The translation key.
+     *
+     * @param locale  The locale to translate the key to.
+     * @param tlKey   The translation key.
      * @param objects Translation parameters, if applicable. Note: by default, these will not be parsed for MiniMessage.
      * @return The translated message.
      * @see AdventureUtil#parsed(String)
@@ -98,6 +86,38 @@ public class I18n implements net.ess3.api.II18n {
 
     public static String capitalCase(final String input) {
         return input == null || input.isEmpty() ? input : input.toUpperCase(Locale.ENGLISH).charAt(0) + input.toLowerCase(Locale.ENGLISH).substring(1);
+    }
+
+    public static Object[] mutateArgs(final Object[] objects, final Function<Object, String> mutator) {
+        final Object[] args = new Object[objects.length];
+        for (int i = 0; i < objects.length; i++) {
+            final Object object = objects[i];
+            // MessageFormat will format these itself, troll face.
+            if (object instanceof Number || object instanceof Date || object == null) {
+                args[i] = object;
+                continue;
+            }
+
+            args[i] = mutator.apply(object);
+        }
+        return args;
+    }
+
+    public static Locale getLocale(final String loc) {
+        if (loc == null || loc.isEmpty()) {
+            return instance.currentLocale;
+        }
+        final String[] parts = loc.split("[_.]");
+        if (parts.length == 1) {
+            return new Locale(parts[0]);
+        }
+        if (parts.length == 2) {
+            return new Locale(parts[0], parts[1]);
+        }
+        if (parts.length == 3) {
+            return new Locale(parts[0], parts[1], parts[2]);
+        }
+        return instance.currentLocale;
     }
 
     public void onEnable() {
@@ -193,21 +213,6 @@ public class I18n implements net.ess3.api.II18n {
         return messageFormat.format(processedArgs).replace(' ', ' '); // replace nbsp with a space
     }
 
-    public static Object[] mutateArgs(final Object[] objects, final Function<Object, String> mutator) {
-        final Object[] args = new Object[objects.length];
-        for (int i = 0; i < objects.length; i++) {
-            final Object object = objects[i];
-            // MessageFormat will format these itself, troll face.
-            if (object instanceof Number || object instanceof Date || object == null) {
-                args[i] = object;
-                continue;
-            }
-
-            args[i] = mutator.apply(object);
-        }
-        return args;
-    }
-
     public void updateLocale(final String loc) {
         if (loc != null && !loc.isEmpty()) {
             currentLocale = getLocale(loc);
@@ -222,23 +227,6 @@ public class I18n implements net.ess3.api.II18n {
         } catch (final MissingResourceException ex) {
             localeBundle = NULL_BUNDLE;
         }
-    }
-
-    public static Locale getLocale(final String loc) {
-        if (loc == null || loc.isEmpty()) {
-            return instance.currentLocale;
-        }
-        final String[] parts = loc.split("[_.]");
-        if (parts.length == 1) {
-            return new Locale(parts[0]);
-        }
-        if (parts.length == 2) {
-            return new Locale(parts[0], parts[1]);
-        }
-        if (parts.length == 3) {
-            return new Locale(parts[0], parts[1], parts[2]);
-        }
-        return instance.currentLocale;
     }
 
     /**

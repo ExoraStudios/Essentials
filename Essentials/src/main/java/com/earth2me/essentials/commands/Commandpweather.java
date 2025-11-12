@@ -7,13 +7,7 @@ import com.google.common.collect.Lists;
 import org.bukkit.Server;
 import org.bukkit.WeatherType;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class Commandpweather extends EssentialsLoopCommand {
     private static final List<String> getAliases = Arrays.asList("get", "list", "show", "display");

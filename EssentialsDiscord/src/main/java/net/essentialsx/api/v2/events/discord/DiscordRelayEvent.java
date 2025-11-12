@@ -23,17 +23,17 @@ public class DiscordRelayEvent extends Event implements Cancellable {
     private final InteractionChannel channel;
     private final List<String> groupNames;
     private final String rawMessage;
-    private String formattedMessage;
     private final List<IUser> viewers;
+    private String formattedMessage;
     private boolean cancelled = false;
 
     /**
-     * @param member            The member that sent the message.
-     * @param channel           The channel the message was sent in.
-     * @param groupNames        The message type keys which will be used to determine which player group the message should be sent to.
-     * @param rawMessage        The raw message sent from Discord.
-     * @param formattedMessage  The formatted message that will be sent to Minecraft.
-     * @param viewers           The users that will see this relayed message.
+     * @param member           The member that sent the message.
+     * @param channel          The channel the message was sent in.
+     * @param groupNames       The message type keys which will be used to determine which player group the message should be sent to.
+     * @param rawMessage       The raw message sent from Discord.
+     * @param formattedMessage The formatted message that will be sent to Minecraft.
+     * @param viewers          The users that will see this relayed message.
      */
     public DiscordRelayEvent(final InteractionMember member, final InteractionChannel channel, final List<String> groupNames, final String rawMessage, final String formattedMessage, final List<IUser> viewers) {
         super(!Bukkit.isPrimaryThread());
@@ -45,8 +45,13 @@ public class DiscordRelayEvent extends Event implements Cancellable {
         this.viewers = viewers;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the Discord member that sent the message.
+     *
      * @return The member that sent the message.
      */
     public InteractionMember getMember() {
@@ -55,6 +60,7 @@ public class DiscordRelayEvent extends Event implements Cancellable {
 
     /**
      * Gets the Discord channel the message was sent in.
+     *
      * @return The channel the message was sent in.
      */
     public InteractionChannel getChannel() {
@@ -63,6 +69,7 @@ public class DiscordRelayEvent extends Event implements Cancellable {
 
     /**
      * Gets the message type group keys.
+     *
      * @return The message type group keys.
      */
     public List<String> getGroupNames() {
@@ -71,6 +78,7 @@ public class DiscordRelayEvent extends Event implements Cancellable {
 
     /**
      * Gets the raw message sent from Discord.
+     *
      * @return The raw message sent from Discord.
      */
     public String getRawMessage() {
@@ -79,6 +87,7 @@ public class DiscordRelayEvent extends Event implements Cancellable {
 
     /**
      * Gets the formatted message that will be sent to Minecraft.
+     *
      * @return The formatted message.
      */
     public String getFormattedMessage() {
@@ -87,6 +96,7 @@ public class DiscordRelayEvent extends Event implements Cancellable {
 
     /**
      * Sets the formatted message that will be sent to Minecraft.
+     *
      * @param formattedMessage The formatted message.
      */
     public void setFormattedMessage(final String formattedMessage) {
@@ -96,6 +106,7 @@ public class DiscordRelayEvent extends Event implements Cancellable {
     /**
      * Gets the users that will be sent the relayed message.
      * The returned list is mutable. Removing a player from it will hide the message from them.
+     *
      * @return The mutable list of users.
      */
     public List<IUser> getViewers() {
@@ -115,10 +126,6 @@ public class DiscordRelayEvent extends Event implements Cancellable {
     @NotNull
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

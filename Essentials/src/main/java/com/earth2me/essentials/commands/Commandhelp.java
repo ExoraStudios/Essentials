@@ -2,11 +2,7 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.textreader.HelpInput;
-import com.earth2me.essentials.textreader.IText;
-import com.earth2me.essentials.textreader.KeywordReplacer;
-import com.earth2me.essentials.textreader.TextInput;
-import com.earth2me.essentials.textreader.TextPager;
+import com.earth2me.essentials.textreader.*;
 import com.earth2me.essentials.utils.AdventureUtil;
 import com.earth2me.essentials.utils.NumberUtil;
 import net.ess3.provider.KnownCommandsProvider;
@@ -14,12 +10,7 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginIdentifiableCommand;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
+import java.util.*;
 
 public class Commandhelp extends EssentialsCommand {
     public Commandhelp() {
@@ -47,7 +38,8 @@ public class Commandhelp extends EssentialsCommand {
                         if (essCommand != null) {
                             try {
                                 description = user.playerTl(bukkit.getName() + "CommandDescription");
-                            } catch (MissingResourceException ignored) {}
+                            } catch (MissingResourceException ignored) {
+                            }
                         }
                         user.sendTl("commandHelpLine2", description);
                         user.sendTl("commandHelpLine4", bukkit.getAliases().toString());

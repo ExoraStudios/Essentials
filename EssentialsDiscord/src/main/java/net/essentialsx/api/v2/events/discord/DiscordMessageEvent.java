@@ -16,14 +16,13 @@ import java.util.UUID;
  */
 public class DiscordMessageEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-
+    private final UUID uuid;
     private boolean cancelled = false;
     private MessageType type;
     private String message;
     private boolean allowGroupMentions;
     private String avatarUrl;
     private String name;
-    private final UUID uuid;
 
     /**
      * @param type               The message type/destination of this event.
@@ -52,8 +51,13 @@ public class DiscordMessageEvent extends Event implements Cancellable {
         this.uuid = uuid;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     /**
      * Gets the type of this message. This also defines its destination.
+     *
      * @return The message type.
      */
     public MessageType getType() {
@@ -62,6 +66,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Sets the message type and therefore its destination.
+     *
      * @param type The new message type.
      */
     public void setType(MessageType type) {
@@ -70,6 +75,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Gets the raw message content that is about to be sent to Discord.
+     *
      * @return The raw message.
      */
     public String getMessage() {
@@ -78,6 +84,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Sets the raw message content to be sent to Discord.
+     *
      * @param message The new message content.
      */
     public void setMessage(String message) {
@@ -86,6 +93,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Checks if this message allows pinging of roles/@here/@everyone.
+     *
      * @return true if this message is allowed to ping of roles/@here/@everyone.
      */
     public boolean isAllowGroupMentions() {
@@ -94,6 +102,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Sets if this message is allowed to ping roles/@here/@everyone.
+     *
      * @param allowGroupMentions If pinging of roles/@here/@everyone should be allowed.
      */
     public void setAllowGroupMentions(boolean allowGroupMentions) {
@@ -102,6 +111,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Gets the avatar URL to use for this message, or null if none is specified.
+     *
      * @return The avatar URL or null.
      */
     public String getAvatarUrl() {
@@ -110,6 +120,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Sets the avatar URL for this message, or null to use the bot's avatar.
+     *
      * @param avatarUrl The avatar URL or null.
      */
     public void setAvatarUrl(String avatarUrl) {
@@ -118,6 +129,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Gets the name to use for this message, or null if none is specified.
+     *
      * @return The name or null.
      */
     public String getName() {
@@ -126,6 +138,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Sets the name for this message, or null to use the bot's name.
+     *
      * @param name The name or null.
      */
     public void setName(String name) {
@@ -134,6 +147,7 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     /**
      * Gets the UUID of the player which caused this event, or null if it wasn't a player triggered event.
+     *
      * @return The UUID or null.
      */
     public UUID getUUID() {
@@ -152,10 +166,6 @@ public class DiscordMessageEvent extends Event implements Cancellable {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

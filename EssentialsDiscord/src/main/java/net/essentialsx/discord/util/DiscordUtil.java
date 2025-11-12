@@ -7,11 +7,7 @@ import com.earth2me.essentials.utils.FormatUtil;
 import com.earth2me.essentials.utils.VersionUtil;
 import com.google.common.collect.ImmutableList;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.Webhook;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.essentialsx.api.v2.events.discord.DiscordMessageEvent;
 import net.essentialsx.api.v2.services.discord.MessageType;
@@ -63,7 +59,6 @@ public final class DiscordUtil {
      *
      * @param channel     The channel to search for/create webhooks in.
      * @param webhookName The name of the webhook to search for/create.
-     *
      * @return A future which completes with the webhook by the given name in the given channel, or null
      * if the bot lacks the proper permissions.
      */
@@ -110,8 +105,8 @@ public final class DiscordUtil {
     /**
      * Creates a webhook with the given name in the given channel.
      *
-     * @param channel        The channel to search for webhooks in.
-     * @param webhookName    The name of the webhook to look for.
+     * @param channel     The channel to search for webhooks in.
+     * @param webhookName The name of the webhook to look for.
      * @return A future which completes with the webhook by the given name in the given channel or null if no permissions.
      */
     public static CompletableFuture<Webhook> createWebhook(TextChannel channel, String webhookName) {
